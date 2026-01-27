@@ -1,0 +1,108 @@
+---
+import Container from "../ui/Container.astro";
+import Button from "../ui/Button.astro";
+import { AGENCY_NAME, BRAND_TAGLINE, HERO_BENEFITS, WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from "../../lib/constants";
+
+const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+---
+
+<section class="section hero" id="contenido">
+  <Container>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <img src="/images/logo-coral.svg" alt="Gold Models" class="brand-mark" width="180" height="110" loading="eager" />
+        <span class="eyebrow">Talento remoto • +18</span>
+        <h1>{AGENCY_NAME}</h1>
+        <p class="lead">
+          {BRAND_TAGLINE}. Proceso guiado, pagos transparentes y soporte humano para que te enfoques en crecer.
+        </p>
+
+        <ul class="list-clean bullets">
+          {HERO_BENEFITS.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+
+        <div class="cta-row">
+          <Button size="lg" variant="whatsapp" href={whatsappUrl} target="_blank" rel="noopener">
+            Hablar por WhatsApp
+          </Button>
+        </div>
+        <p class="muted note">Sin costos de inscripción. Confirmamos mayoría de edad (+18) antes de continuar.</p>
+      </div>
+      <div class="hero-card card">
+        <p class="badge">Onboarding rápido</p>
+        <h3>¿Qué obtienes?</h3>
+        <ul class="list-clean perks">
+          <li><strong>Soporte dedicado:</strong> equipo disponible para resolver dudas en tiempo real.</li>
+          <li><strong>Playbooks de calidad:</strong> guías prácticas para maximizar tus resultados.</li>
+          <li><strong>Pagos claros:</strong> calendario y seguimiento de cada ciclo de pago.</li>
+        </ul>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .hero {
+    padding-top: clamp(48px, 8vw, 96px);
+  }
+
+  .hero-grid {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    align-items: center;
+  }
+
+  .lead {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 680px;
+    margin-bottom: 18px;
+  }
+
+  .bullets {
+    display: grid;
+    gap: 10px;
+    margin: 0 0 18px;
+    padding: 0;
+  }
+
+  .bullets li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .bullets li::before {
+    content: "✓";
+    color: var(--primary);
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  .hero-card {
+    background: #fff;
+  }
+
+  .brand-mark {
+    width: 170px;
+    height: auto;
+    margin-bottom: 12px;
+  }
+
+  .perks {
+    display: grid;
+    gap: 10px;
+    padding: 0;
+    margin: 12px 0 0;
+    color: var(--muted);
+  }
+
+  .note {
+    margin-top: 10px;
+  }
+</style>

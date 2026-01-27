@@ -1,0 +1,33 @@
+---
+import Container from "../ui/Container.astro";
+import { AGENCY_NAME } from "../../lib/constants";
+---
+
+<footer class="footer">
+  <Container>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="/images/logo-dark.svg" alt="Gold Models" width="120" height="70" loading="lazy" />
+        <p class="meta">Talento global, procesos claros y acompañamiento real.</p>
+      </div>
+      <div class="meta">
+        <p>© {new Date().getFullYear()} {AGENCY_NAME}. Todos los derechos reservados.</p>
+        <p>Solo para mayores de 18 años.</p>
+      </div>
+    </div>
+  </Container>
+</footer>
+
+<style>
+  .footer-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .footer-brand img {
+    display: block;
+  }
+</style>

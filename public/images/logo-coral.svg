@@ -1,0 +1,15 @@
+<svg width="640" height="400" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Gold Models</title>
+  <desc id="desc">Logotipo de Gold Models con contorno coral sobre fondo transparente</desc>
+  <g fill="none" stroke="#ff6b6b" stroke-width="6">
+    <path d="M200 340c-32 0-58-26-58-58V180c0-82 66-148 148-148h60c82 0 148 66 148 148v102c0 32-26 58-58 58H200z"/>
+  </g>
+  <text x="320" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="120" fill="#ff6b6b">G</text>
+  <text x="320" y="230" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="52" font-weight="700" letter-spacing="8" fill="#ff6b6b">
+    GOLD MODELS
+  </text>
+  <text x="320" y="280" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="600" letter-spacing="4" fill="#ff6b6b">
+    DESDE 2023
+  </text>
+  <line x1="240" x2="400" y1="300" y2="300" stroke="#ff6b6b" stroke-width="6" stroke-linecap="round"/>
+</svg>

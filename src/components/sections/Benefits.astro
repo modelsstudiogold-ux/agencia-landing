@@ -1,0 +1,47 @@
+---
+import Container from "../ui/Container.astro";
+
+const benefits = [
+  {
+    title: "Soporte real, no bots",
+    desc: "Equipo humano para resolver dudas y acompañarte desde la aplicación hasta tus primeras semanas.",
+  },
+  {
+    title: "Infraestructura segura",
+    desc: "Lineamientos claros, checklist de cumplimiento y buenas prácticas para que trabajes con confianza.",
+  },
+  {
+    title: "Optimizado para escalar",
+    desc: "Playbooks, rutinas de calidad y métricas simples que te ayudan a mejorar cada semana.",
+  },
+];
+---
+
+<section class="section">
+  <Container>
+    <header class="section-head">
+      <span class="eyebrow">Beneficios clave</span>
+      <h2>Todo lo que necesitas para empezar bien</h2>
+      <p class="muted">Un proceso directo, sin fricción y con recursos listos para que avances.</p>
+    </header>
+
+    <div class="grid cards">
+      {benefits.map((item) => (
+        <article class="card">
+          <h3>{item.title}</h3>
+          <p>{item.desc}</p>
+        </article>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .cards {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .card h3 {
+    margin-bottom: 8px;
+  }
+</style>

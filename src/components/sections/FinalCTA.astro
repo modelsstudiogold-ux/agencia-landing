@@ -1,0 +1,57 @@
+---
+import Container from "../ui/Container.astro";
+import Button from "../ui/Button.astro";
+import { WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from "../../lib/constants";
+
+const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+---
+
+<section class="section final-cta">
+  <Container>
+    <div class="cta-card card">
+      <div>
+        <span class="eyebrow">Listo para empezar</span>
+        <h2>Aplica hoy y recibe acompañamiento personalizado</h2>
+        <p class="muted">Tomamos menos de 24 horas en responder. Solo para mayores de 18 años.</p>
+      </div>
+      <div class="cta-actions">
+        <Button size="lg" variant="whatsapp" href={whatsappUrl} target="_blank" rel="noopener">
+          WhatsApp inmediato
+        </Button>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .final-cta {
+    padding-bottom: 96px;
+  }
+
+  .cta-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+    background: linear-gradient(120deg, rgba(255, 107, 107, 0.12), rgba(37, 211, 102, 0.12));
+    border: 1px solid var(--border);
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 768px) {
+    .cta-card {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-actions {
+      justify-content: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

@@ -1,0 +1,61 @@
+---
+import Container from "../ui/Container.astro";
+import { FAQ_ITEMS } from "../../lib/constants";
+---
+
+<section class="section">
+  <Container>
+    <header class="section-head">
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2>Respuestas rápidas</h2>
+      <p class="muted">Si aún tienes dudas, escribe por WhatsApp o aplica y te contactamos.</p>
+    </header>
+
+    <div class="faq-list">
+      {FAQ_ITEMS.map((item) => (
+        <details class="faq-item">
+          <summary>
+            <h3>{item.question}</h3>
+          </summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .faq-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: #fff;
+    padding: 14px 16px;
+  }
+
+  summary {
+    list-style: none;
+    cursor: pointer;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  details p {
+    margin: 10px 0 4px;
+  }
+</style>
