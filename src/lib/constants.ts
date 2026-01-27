@@ -1,7 +1,7 @@
 export const AGENCY_NAME = "Gold Models";
 export const BRAND_TAGLINE = "Oportunidades reales para talento mayor de 18";
 
-export const WHATSAPP_NUMBER = "+573001112233";
+export const WHATSAPP_NUMBER = "+573102704428";
 export const WHATSAPP_MESSAGE =
   "Hola, vi la oportunidad en la landing y quiero saber más sobre el proceso de aplicación.";
 
