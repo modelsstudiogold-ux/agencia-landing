@@ -48,3 +48,8 @@ export const FAQ_ITEMS = [
       "Usamos tus datos únicamente para evaluar tu perfil y contactarte sobre el proceso. No los compartimos con terceros sin tu consentimiento.",
   },
 ];
+
+export const SOCIAL_LINKS = {
+  instagram: "https://www.instagram.com/goldmodelsbogota?igsh=a3R1bGRrMmU4bGxh",
+  tiktok: "https://www.tiktok.com/@gold.models3?_r=1&_t=ZS-93QX90Tsr1M",
+};

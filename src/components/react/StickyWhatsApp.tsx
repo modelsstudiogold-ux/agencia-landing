@@ -8,7 +8,9 @@ export default function StickyWhatsApp() {
   return (
     <>
       <a className="wpp" href={whatsappUrl} target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
-        <span className="wpp__icon">💬</span>
+        <svg className="wpp__icon" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3C9.4 3 4 8.2 4 14.7c0 2.4.8 4.6 2 6.5L4 29l7-2.1c1.7.9 3.6 1.3 5.5 1.3 6.6 0 12-5.2 12-11.7S22.6 3 16 3Zm0 2.3c5.3 0 9.7 4.2 9.7 9.4 0 5.2-4.3 9.4-9.7 9.4-1.7 0-3.4-.5-4.8-1.3l-.4-.2-4.1 1.2 1.3-3.9-.3-.4c-1-1.5-1.6-3.2-1.6-5 0-5.2 4.3-9.4 9.7-9.4Zm-5.4 4c-.1-.2-.3-.2-.5-.2h-.4c-.1 0-.3 0-.4.2-.1.2-1.1 1-.1 3.1.9 1.7 2.1 3.3 3.9 4.5 1.8 1.1 2.7 1.3 3.3 1.2.6-.1 1.6-.7 1.8-1.4.2-.7.2-1.2.2-1.3 0-.1-.1-.2-.3-.3-.2-.1-1.5-.7-1.7-.8-.2-.1-.4 0-.5.1-.1.1-.6.7-.7.9-.1.1-.2.1-.3 0-.1 0-.5-.2-1.1-.5-1-.6-1.6-1.4-1.8-1.6-.1-.1 0-.2.1-.3.1-.1.2-.2.3-.3.1-.1.1-.2.2-.3.1-.1.1-.2.2-.3.1-.1.1-.2 0-.3-.1-.1-.8-2.1-.9-2.3-.1-.2-.2-.2-.3-.2Z" />
+        </svg>
         <span className="wpp__text">WhatsApp</span>
       </a>
       <style>
@@ -34,7 +36,9 @@ export default function StickyWhatsApp() {
             transform: translateY(-1px);
           }
           .wpp__icon {
-            font-size: 1.2rem;
+            width: 18px;
+            height: 18px;
+            fill: #0f172a;
           }
           @media (max-width: 480px) {
             .wpp {

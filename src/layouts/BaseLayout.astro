@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import type { SeoProps } from "../lib/seo";
 import { buildSeo, seoDefaults } from "../lib/seo";
+import ThemeSwitcher from "../components/react/ThemeSwitcher.tsx";
 
 const { title, description, image, url }: SeoProps = buildSeo(Astro.props);
 const canonical = url ?? Astro.site?.href ?? undefined;
@@ -32,9 +33,28 @@ const canonical = url ?? Astro.site?.href ?? undefined;
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <script>
+      {`(function() {
+        try {
+          const stored = localStorage.getItem('gm_theme');
+          const theme = stored || 'coral';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'coral');
+        }
+      })();`}
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+    <header class="top-bar">
+      <div class="container top-bar__inner">
+        <a class="brand" href="/">
+          <img src="/images/logo-coral.svg" alt="Gold Models" width="120" height="70" loading="lazy" />
+        </a>
+        <ThemeSwitcher client:load />
+      </div>
+    </header>
     <slot />
   </body>
 </html>

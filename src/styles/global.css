@@ -2,8 +2,8 @@
   color-scheme: light;
   --bg: #ffffff;
   --text: #111827;
-  --muted: #4b5563;
-  --card: #f3f4f6;
+  --muted-text: #374151;
+  --surface: #f3f4f6;
   --border: #e5e7eb;
   --primary: #ff6b6b;
   --primary-hover: #ff8787;
@@ -15,6 +15,78 @@
   --section-padding: clamp(64px, 10vw, 96px);
 }
 
+html[data-theme="coral"] {
+  --bg: #ffffff;
+  --text: #111827;
+  --muted-text: #374151;
+  --surface: #f3f4f6;
+  --border: #e5e7eb;
+  --primary: #ff6b6b;
+  --primary-hover: #ff8787;
+  --whatsapp: #25d366;
+  --whatsapp-hover: #1ebe5d;
+}
+
+html[data-theme="electric-blue"] {
+  --bg: #ffffff;
+  --text: #0f172a;
+  --muted-text: #334155;
+  --surface: #f1f5f9;
+  --border: #e2e8f0;
+  --primary: #2563eb;
+  --primary-hover: #3b82f6;
+  --whatsapp: #25d366;
+  --whatsapp-hover: #1ebe5d;
+}
+
+html[data-theme="purple-neon"] {
+  --bg: #0b0b12;
+  --text: #ffffff;
+  --muted-text: #c7c9d1;
+  --surface: #141428;
+  --border: #2a2a44;
+  --primary: #ff2e9a;
+  --primary-hover: #ff5bb4;
+  --whatsapp: #25d366;
+  --whatsapp-hover: #1ebe5d;
+}
+
+html[data-theme="emerald-gold"] {
+  --bg: #ffffff;
+  --text: #0b1220;
+  --muted-text: #334155;
+  --surface: #ecfdf5;
+  --border: #a7f3d0;
+  --primary: #0f766e;
+  --primary-hover: #14b8a6;
+  --whatsapp: #25d366;
+  --whatsapp-hover: #1ebe5d;
+}
+
+html[data-theme="charcoal-orange"] {
+  --bg: #0b0b0e;
+  --text: #ffffff;
+  --muted-text: #d1d5db;
+  --surface: #111827;
+  --border: #1f2937;
+  --primary: #f97316;
+  --primary-hover: #fb923c;
+  --whatsapp: #25d366;
+  --whatsapp-hover: #1ebe5d;
+}
+
+html[data-theme="red-bright"] {
+  --bg: #ffffff;
+  --text: #111827;
+  --muted-text: #374151;
+  --surface: #f9fafb;
+  --border: #e5e7eb;
+  --primary: #e11d48;
+  --primary-hover: #f43f5e;
+  --whatsapp: #25d366;
+  --whatsapp-hover: #1ebe5d;
+}
+
 *,
 *::before,
 *::after {
@@ -23,13 +95,13 @@
 
 html {
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  background: var(--bg);
-  color: var(--text);
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
+  background: var(--bg);
+  color: var(--text);
 }
 
 a {
@@ -39,7 +111,7 @@ a {
 
 p {
   line-height: 1.6;
-  color: var(--muted);
+  color: var(--muted-text);
   margin: 0 0 0.6em;
 }
 
@@ -83,9 +155,29 @@ h2 {
 
 .page {
   min-height: 100vh;
-  background: radial-gradient(80% 60% at 20% 10%, rgba(255, 107, 107, 0.08), transparent 45%),
-    radial-gradient(60% 50% at 80% 10%, rgba(37, 211, 102, 0.08), transparent 40%),
+  background: radial-gradient(80% 60% at 20% 10%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 45%),
+    radial-gradient(60% 50% at 80% 10%, color-mix(in srgb, var(--whatsapp) 12%, transparent), transparent 40%),
     var(--bg);
+}
+
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.top-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.brand img {
+  display: block;
+  max-height: 54px;
 }
 
 .container {
@@ -109,10 +201,10 @@ h2 {
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
-  background: rgba(255, 107, 107, 0.12);
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
   color: var(--text);
   border-radius: 999px;
-  border: 1px solid rgba(255, 107, 107, 0.45);
+  border: 1px solid color-mix(in srgb, var(--primary) 45%, transparent);
   font-size: 0.9rem;
   font-weight: 600;
 }
@@ -125,13 +217,13 @@ h2 {
 .card {
   padding: 20px;
   border: 1px solid var(--border);
-  background: var(--card);
+  background: var(--surface);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
 }
 
 .muted {
-  color: var(--muted);
+  color: var(--muted-text);
 }
 
 .cta-row {
@@ -200,10 +292,21 @@ h2 {
   gap: 6px;
   padding: 8px 12px;
   border-radius: 999px;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text);
   font-weight: 600;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted-text);
 }
 
 .faq-item {
@@ -216,11 +319,11 @@ h2 {
 .footer {
   border-top: 1px solid var(--border);
   padding: 28px 0 40px;
-  background: #f9fafb;
+  background: var(--surface);
 }
 
 .footer .meta {
-  color: var(--muted);
+  color: var(--muted-text);
   font-size: 0.95rem;
 }
 
