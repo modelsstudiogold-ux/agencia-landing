@@ -3,7 +3,7 @@ import Container from "../ui/Container.astro";
 import { PROCESS_STEPS } from "../../lib/constants";
 ---
 
-<section class="section">
+<section class="section" id="proceso">
   <Container>
     <header class="section-head">
       <span class="eyebrow">Cómo funciona</span>
@@ -46,8 +46,8 @@ import { PROCESS_STEPS } from "../../lib/constants";
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(255, 107, 107, 0.12);
-    border: 1px solid rgba(255, 107, 107, 0.5);
+    background: color-mix(in srgb, var(--primary) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--primary) 55%, transparent);
     font-weight: 700;
     color: var(--text);
   }

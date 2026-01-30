@@ -2,14 +2,16 @@
 import "../styles/global.css";
 import type { SeoProps } from "../lib/seo";
 import { buildSeo, seoDefaults } from "../lib/seo";
-import ThemeSwitcher from "../components/react/ThemeSwitcher.tsx";
+
+type LayoutProps = SeoProps & { schema?: unknown };
 
 const { title, description, image, url }: SeoProps = buildSeo(Astro.props);
+const { schema } = Astro.props as LayoutProps;
 const canonical = url ?? Astro.site?.href ?? undefined;
 ---
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="coral">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,31 +32,46 @@ const canonical = url ?? Astro.site?.href ?? undefined;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
-    <script>
-      {`(function() {
-        try {
-          const stored = localStorage.getItem('gm_theme');
-          const theme = stored || 'coral';
-          document.documentElement.setAttribute('data-theme', theme);
-        } catch (e) {
-          document.documentElement.setAttribute('data-theme', 'coral');
-        }
-      })();`}
-    </script>
+    {schema && <script type="application/ld+json">{JSON.stringify(schema)}</script>}
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
     <header class="top-bar">
       <div class="container top-bar__inner">
         <a class="brand" href="/">
-          <img src="/images/logo-coral.svg" alt="Gold Models" width="120" height="70" loading="lazy" />
+          <span class="brand__text" aria-label="Gold Models Studio">
+            <span class="brand__name">GOLD MODELS</span>
+            <span class="brand__sub">studio</span>
+          </span>
         </a>
-        <ThemeSwitcher client:load />
+        <nav class="nav nav--desktop" aria-label="Navegación principal">
+          <a class="nav__link" href="#beneficios">Por qué elegirnos</a>
+          <a class="nav__link" href="#proceso">Proceso</a>
+          <a class="nav__link" href="#faq">FAQ</a>
+        </nav>
+
+        <details class="nav-toggle">
+          <summary class="nav-toggle__button" aria-label="Abrir menú">
+            <span class="nav-toggle__icon" aria-hidden="true"></span>
+          </summary>
+          <nav class="nav nav--mobile" aria-label="Navegación móvil">
+            <a class="nav__link" href="#beneficios">Por qué elegirnos</a>
+            <a class="nav__link" href="#proceso">Proceso</a>
+            <a class="nav__link" href="#faq">FAQ</a>
+          </nav>
+        </details>
       </div>
     </header>
+    <script>
+      document.querySelectorAll('.nav-toggle a').forEach((link) => {
+        link.addEventListener('click', () => {
+          link.closest('details')?.removeAttribute('open');
+        });
+      });
+    </script>
     <slot />
   </body>
 </html>

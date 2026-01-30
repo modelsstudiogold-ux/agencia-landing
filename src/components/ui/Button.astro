@@ -3,6 +3,8 @@ type Props = {
   href?: string;
   variant?: "primary" | "ghost" | "whatsapp";
   size?: "md" | "lg";
+  target?: string;
+  rel?: string;
 };
 
 const { href, variant = "primary", size = "md", ...attrs } = Astro.props;

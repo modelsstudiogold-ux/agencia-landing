@@ -1,0 +1,67 @@
+---
+import Container from "../ui/Container.astro";
+import Button from "../ui/Button.astro";
+import { LOCATIONS, WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from "../../lib/constants";
+
+const baseNumber = WHATSAPP_NUMBER.replace(/\D/g, "");
+const buildWhatsappUrl = (locationName: string) => {
+  const message = `${WHATSAPP_MESSAGE}\n\nMe interesa la sede: ${locationName} (Bogotá).`;
+  return `https://wa.me/${baseNumber}?text=${encodeURIComponent(message)}`;
+};
+---
+
+<section class="section" id="sedes">
+  <Container>
+    <header class="section-head">
+      <span class="eyebrow">Bogotá</span>
+      <h2>Sedes disponibles: Modelia y Normandía</h2>
+      <p class="muted">
+        Elige la sede que te quede mejor. Te explicamos el proceso, resolvemos dudas y confirmamos requisitos (+18)
+        antes de agendar.
+      </p>
+    </header>
+
+    <div class="grid locations">
+      {LOCATIONS.map((location) => (
+        <article class="card location" aria-label={`Sede ${location.name}`}>
+          <div class="location__top">
+            <h3>{location.name}</h3>
+            <p class="muted">{location.zone}</p>
+          </div>
+          <p>{location.description}</p>
+          <div class="cta-row">
+            <Button variant="whatsapp" href={buildWhatsappUrl(location.name)} target="_blank" rel="noopener">
+              Preguntar por {location.name}
+            </Button>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p class="muted note">
+      Nota: por seguridad y privacidad, compartimos detalles de ubicación exacta solo por WhatsApp durante el
+      agendamiento.
+    </p>
+  </Container>
+</section>
+
+<style>
+  .locations {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .location {
+    display: grid;
+    gap: 10px;
+  }
+
+  .location__top {
+    display: grid;
+    gap: 2px;
+  }
+
+  .note {
+    margin-top: 16px;
+    max-width: 760px;
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+import Container from "../ui/Container.astro";
+---
+
+<section class="section" id="legal">
+  <Container>
+    <header class="section-head">
+      <span class="eyebrow">Transparencia</span>
+      <h2>Privacidad, mayoría de edad y tratamiento de datos</h2>
+      <p class="muted">
+        Esta página está orientada a reclutamiento de talento. La comunicación es no explícita y el proceso aplica
+        únicamente para mayores de 18 años.
+      </p>
+    </header>
+
+    <div class="grid legal-grid">
+      <article class="card">
+        <h3>+18 (requisito)</h3>
+        <p>Confirmamos mayoría de edad antes de agendar entrevista o visita.</p>
+      </article>
+      <article class="card">
+        <h3>Uso de datos</h3>
+        <p>
+          Usamos tus datos únicamente para contactarte, evaluar tu perfil y coordinar el proceso. No compartimos tu
+          información con terceros sin tu consentimiento.
+        </p>
+      </article>
+      <article class="card">
+        <h3>Canal oficial</h3>
+        <p>
+          WhatsApp es el canal principal para resolver dudas, confirmar requisitos y coordinar entrevista. Evita
+          compartir información sensible fuera del chat oficial.
+        </p>
+      </article>
+    </div>
+
+    <p class="muted note">
+      Si deseas actualizar o eliminar tu información, puedes solicitarlo escribiéndonos por WhatsApp.
+    </p>
+  </Container>
+</section>
+
+<style>
+  .legal-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .note {
+    margin-top: 16px;
+    max-width: 760px;
+  }
+</style>

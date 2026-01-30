@@ -2,31 +2,56 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/sections/Hero.astro";
 import Benefits from "../components/sections/Benefits.astro";
+import Provisions from "../components/sections/Provisions.astro";
 import Process from "../components/sections/Process.astro";
 import FAQ from "../components/sections/FAQ.astro";
 import FinalCTA from "../components/sections/FinalCTA.astro";
+import Legal from "../components/sections/Legal.astro";
 import Footer from "../components/sections/Footer.astro";
-import LeadModal from "../components/react/LeadModal";
-import StickyWhatsApp from "../components/react/StickyWhatsApp";
+import StickyWhatsApp from "../components/ui/StickyWhatsApp.astro";
 import { buildSeo } from "../lib/seo";
+import { AGENCY_NAME, FAQ_ITEMS } from "../lib/constants";
 
 const seo = buildSeo({
-  title: "Aplica hoy | Gold Models",
+  title: "Aplica en Bogotá (Modelia y Normandía) | Gold Models",
   description:
-    "Landing page oficial para aplicar a oportunidades remotas. Proceso guiado, pagos transparentes y soporte real. Solo para mayores de 18 años.",
+    "Reclutamiento de talento +18 en Bogotá (Modelia y Normandía). Proceso claro, acompañamiento humano y canal oficial por WhatsApp. Aplica hoy.",
   url: Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined,
 });
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: AGENCY_NAME,
+      url: seo.url,
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: FAQ_ITEMS.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+  ],
+};
 ---
 
-<BaseLayout {...seo}>
+<BaseLayout {...seo} schema={schema}>
   <main class="page">
     <Hero />
+    <Provisions />
     <Benefits />
     <Process />
     <FAQ />
     <FinalCTA />
+    <Legal />
   </main>
   <Footer />
-  <LeadModal client:load />
-  <StickyWhatsApp client:load />
+  <StickyWhatsApp />
 </BaseLayout>
