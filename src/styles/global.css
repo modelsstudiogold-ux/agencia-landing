@@ -6,10 +6,16 @@
   --surface: #ffffff;
   --surface-2: #f8fafc;
   --border: rgba(15, 23, 42, 0.12);
-  --primary: #ff5c6a;
-  --primary-hover: #ff7782;
-  --tint: #f2b8bc;
-  --tint-2: #f8d5d9;
+  --primary: #c8a77a;
+  --primary-hover: #d3b58a;
+  --tint: #f3e7d6;
+  --tint-2: #fbf6ee;
+  --brand-gold: #b77a12;
+  --brand-gold-soft: #8f6314;
+  --brand-gold-1: #fff3c6;
+  --brand-gold-2: #e6c463;
+  --brand-gold-3: #b9851b;
+  --brand-gold-4: #fff8de;
   --whatsapp: #25d366;
   --whatsapp-hover: #1ebe5d;
   --shadow-soft: 0 18px 40px rgba(2, 6, 23, 0.08);
@@ -244,14 +250,15 @@ h2 {
 }
 
 .brand__name {
-  color: var(--text);
+  color: var(--brand-gold);
   font-weight: 600;
   font-size: 1.02rem;
   letter-spacing: 0.24em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
 .brand__sub {
-  color: var(--text);
+  color: var(--brand-gold-soft);
   font-weight: 500;
   font-size: 0.92rem;
   letter-spacing: 0.34em;
@@ -439,15 +446,6 @@ h2 {
   .brand__sub {
     font-size: 1.62rem;
     letter-spacing: 0.28em;
-  }
-
-  .nav-toggle__icon::before,
-  .nav-toggle__icon::after {
-    background: var(--primary);
-  }
-
-  .nav-toggle__icon::before {
-    box-shadow: 0 5px 0 var(--primary);
   }
 }
 

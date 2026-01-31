@@ -16,7 +16,7 @@ const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${
         </h1>
 
         <p class="lead">
-          {AGENCY_NAME}: {BRAND_TAGLINE}. Canal oficial por WhatsApp para resolver dudas y agendar entrevista.
+          {BRAND_TAGLINE}. Canal oficial por WhatsApp para resolver dudas y agendar entrevista.
         </p>
 
         <div class="cta-row hero-cta">
@@ -38,6 +38,14 @@ const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${
     min-height: 72vh;
     display: flex;
     align-items: center;
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0) 62%),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--primary) 44%, #ffffff) 0%,
+        color-mix(in srgb, var(--tint) 86%, #ffffff) 70%,
+        #ffffff 100%
+      );
   }
 
   .hero-grid {
@@ -86,7 +94,7 @@ const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${
     margin-top: 10px;
   }
 
-  @media (min-width: 981px) {
+  @media (min-width: 900px) {
     .hero-grid {
       grid-template-columns: 1.1fr 0.9fr;
       gap: clamp(24px, 4vw, 54px);
@@ -101,6 +109,27 @@ const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${
     .hero-title {
       color: #fff;
       text-shadow: 0 18px 34px rgba(2, 6, 23, 0.22);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .hero {
+			background: linear-gradient(
+				180deg,
+				color-mix(in srgb, var(--primary) 76%, #000000) 0%,
+				color-mix(in srgb, var(--primary) 60%, #000000) 100%
+			);
+    }
+
+    .hero-title {
+      color: #fff;
+      text-shadow: 0 18px 34px rgba(2, 6, 23, 0.22);
+			max-width: 18ch;
+			text-wrap: balance;
+    }
+
+    .lead {
+      color: color-mix(in srgb, #ffffff 82%, transparent);
     }
 
     .hero-cta :global(.btn-whatsapp) {
