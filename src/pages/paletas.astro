@@ -1,0 +1,227 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const palettes = [
+  {
+    name: "Lavanda (premium/soft)",
+    primary: "#8B5CF6",
+    tint: "#E9D5FF",
+    tint2: "#F5EDFF",
+  },
+  {
+    name: "Menta (fresh/limpio)",
+    primary: "#34D399",
+    tint: "#CFFAEA",
+    tint2: "#ECFDF7",
+  },
+  {
+    name: "Celeste (confianza/tech)",
+    primary: "#60A5FA",
+    tint: "#DCEBFF",
+    tint2: "#F1F7FF",
+  },
+  {
+    name: "Durazno (cálido/beauty)",
+    primary: "#FB7185",
+    tint: "#FFD6DD",
+    tint2: "#FFF1F3",
+  },
+  {
+    name: "Arena (elegante/neutro)",
+    primary: "#C8A77A",
+    tint: "#F3E7D6",
+    tint2: "#FBF6EE",
+  },
+  {
+    name: "Verde salvia (sereno/natural)",
+    primary: "#6AAE8B",
+    tint: "#DCEFE6",
+    tint2: "#F3FBF7",
+  },
+  {
+    name: "Rosa viejo (romántico/branding)",
+    primary: "#D36B8A",
+    tint: "#F4D3DD",
+    tint2: "#FBEAF0",
+  },
+  {
+    name: "Lila grisáceo (minimal/moderno)",
+    primary: "#A78BFA",
+    tint: "#E7E1FF",
+    tint2: "#F6F3FF",
+  },
+] as const;
+---
+
+<BaseLayout title="Paletas pastel" description="Vista previa de paletas pastel" url={Astro.url.href}>
+  <main class="page">
+    <section class="wrap">
+      <h1>Paletas pastel (vista previa)</h1>
+      <p class="sub">Haz click en un color para copiar su HEX.</p>
+
+      <div class="grid">
+        {palettes.map((p) => (
+          <article class="card">
+            <header class="card__head">
+              <h2>{p.name}</h2>
+            </header>
+
+            <div class="row">
+              <button class="swatch" style={`--c:${p.primary}`} data-hex={p.primary} aria-label={`Copiar ${p.primary}`}>
+                <span class="swatch__label">Primary</span>
+                <span class="swatch__hex">{p.primary}</span>
+              </button>
+              <button class="swatch" style={`--c:${p.tint}`} data-hex={p.tint} aria-label={`Copiar ${p.tint}`}>
+                <span class="swatch__label">Tint</span>
+                <span class="swatch__hex">{p.tint}</span>
+              </button>
+              <button class="swatch" style={`--c:${p.tint2}`} data-hex={p.tint2} aria-label={`Copiar ${p.tint2}`}>
+                <span class="swatch__label">Tint 2</span>
+                <span class="swatch__hex">{p.tint2}</span>
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="note" role="status" aria-live="polite" aria-atomic="true" id="note"></div>
+    </section>
+  </main>
+
+  <script>
+    const note = document.getElementById('note');
+    let toastTimer = 0;
+    let message = '';
+
+    function show() {
+      if (!note) return;
+      note.textContent = message;
+      note.classList.add('is-visible');
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => note.classList.remove('is-visible'), 1200);
+    }
+
+    document.querySelectorAll('[data-hex]').forEach((el) => {
+      el.addEventListener('click', async () => {
+        const hex = el.getAttribute('data-hex');
+        if (!hex) return;
+        try {
+          await navigator.clipboard.writeText(hex);
+          message = `Copiado: ${hex}`;
+          show();
+        } catch {
+          message = `No se pudo copiar: ${hex}`;
+          show();
+        }
+      });
+    });
+  </script>
+</BaseLayout>
+
+<style>
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: clamp(28px, 5vw, 56px) clamp(20px, 4vw, 44px);
+  }
+
+  h1 {
+    margin: 0 0 6px;
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  }
+
+  .sub {
+    margin: 0 0 22px;
+    color: var(--muted-text);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+  }
+
+  .card__head {
+    padding: 14px 16px 0;
+  }
+
+  .card__head h2 {
+    margin: 0 0 12px;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+  }
+
+  .row {
+    display: grid;
+    gap: 10px;
+    padding: 0 16px 16px;
+  }
+
+  .swatch {
+    border: 0;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    padding: 12px 12px;
+    border-radius: 14px;
+    background: var(--c);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    transition: transform 120ms ease, filter 120ms ease;
+  }
+
+  .swatch:hover {
+    transform: translateY(-1px);
+    filter: brightness(0.98);
+  }
+
+  .swatch:focus-visible {
+    outline: 3px solid color-mix(in srgb, #000 16%, transparent);
+    outline-offset: 2px;
+  }
+
+  .swatch__label {
+    font-weight: 800;
+    color: rgba(15, 23, 42, 0.85);
+  }
+
+  .swatch__hex {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.95rem;
+    color: rgba(15, 23, 42, 0.72);
+  }
+
+  .note {
+    position: fixed;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%) translateY(10px);
+    opacity: 0;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid color-mix(in srgb, #000 12%, transparent);
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+    color: var(--text);
+    font-weight: 700;
+    transition: opacity 140ms ease, transform 140ms ease;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .note.is-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>

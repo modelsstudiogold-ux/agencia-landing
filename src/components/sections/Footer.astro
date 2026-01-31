@@ -5,63 +5,79 @@ import { AGENCY_NAME, SOCIAL_LINKS } from "../../lib/constants";
 
 <footer class="footer">
   <Container>
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <img src="/images/logo-dark.svg" alt="Gold Models" width="120" height="70" loading="lazy" />
-        <p class="meta">Talento global, procesos claros y acompañamiento real.</p>
-      </div>
-      <div class="meta">
-        <p>Copyright © 2026 {AGENCY_NAME}. Creado BMB Tech.</p>
-        <p>Solo para mayores de 18 años.</p>
-      </div>
-      <div class="social">
-        <a class="instagram" href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener" aria-label="Instagram">
+    <div class="footer-inner">
+      <a class="footer-logo" href="/" aria-label="Gold Models Studio">
+        <span class="brand__text">
+          <span class="brand__name">GOLD MODELS</span>
+          <span class="brand__sub">studio</span>
+        </span>
+      </a>
+
+      <div class="social" aria-label="Redes sociales">
+        <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener" aria-label="Instagram">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 2a2.5 2.5 0 1 0 2.5 2.5A2.5 2.5 0 0 0 12 9.5Zm4.75-3.65a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1Z"/></svg>
         </a>
-        <a class="tiktok" href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener" aria-label="TikTok">
+        <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener" aria-label="TikTok">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3.1c.7 1.6 2 2.8 3.6 3.2v2.3c-1.3-.1-2.5-.6-3.6-1.3v6.3a5.97 5.97 0 0 1-5.7 6 6 6 0 0 1-6-6c0-3.3 2.7-6 6-6 .3 0 .6 0 .9.1v2.5a3.5 3.5 0 0 0-.9-.1 3.5 3.5 0 1 0 3.5 3.5V2h2.2Z"/></svg>
         </a>
+      </div>
+
+      <div class="footer-meta">
+        <p>Copyright © 2026 {AGENCY_NAME}. Creado BMB Tech.</p>
+        <p>Solo para mayores de 18 años.</p>
       </div>
     </div>
   </Container>
 </footer>
 
 <style>
-  .footer-grid {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
+  .footer {
+    background: #fff;
   }
 
-  .footer-brand img {
-    display: block;
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+    padding: 18px 0 30px;
+  }
+
+  .footer-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-logo .brand__text {
+    transform: scale(1.05);
   }
 
   .social {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
   }
 
   .social a {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--border);
+    border: 1px solid color-mix(in srgb, #000 12%, transparent);
     border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.12);
-    transition: transform 120ms ease, box-shadow 120ms ease, border 120ms ease;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 22px rgba(2, 6, 23, 0.08);
+    transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
   }
 
   .social a:hover {
     transform: translateY(-1px);
-    border-color: #cbd5e1;
+    border-color: color-mix(in srgb, var(--primary) 55%, transparent);
     box-shadow: var(--shadow-soft);
   }
 
@@ -74,13 +90,17 @@ import { AGENCY_NAME, SOCIAL_LINKS } from "../../lib/constants";
   .social svg path {
     stroke-width: 1.7;
     fill: none;
+    stroke: color-mix(in srgb, var(--primary) 96%, #000000);
   }
 
-  .social a.instagram svg path {
-    stroke: #e1306c; /* Instagram magenta */
+  .footer-meta {
+    color: var(--muted-text);
+    font-size: 0.95rem;
+    display: grid;
+    gap: 6px;
   }
 
-  .social a.tiktok svg path {
-    stroke: #000000; /* TikTok primary black */
+  .footer-meta p {
+    margin: 0;
   }
 </style>
