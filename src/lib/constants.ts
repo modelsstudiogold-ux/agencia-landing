@@ -1,4 +1,3 @@
-//CONSTANTES DE LA AGENCIA
 export const AGENCY_NAME = "Gold Models";
 export const BRAND_TAGLINE = "Oportunidades reales para talento mayor de 18";
 
