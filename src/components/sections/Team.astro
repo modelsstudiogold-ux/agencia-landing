@@ -1,0 +1,163 @@
+---
+import Container from "../ui/Container.astro";
+
+const team = [
+  {
+    key: "gerencia",
+    title: "Gerencia",
+    role: "Dirección principal",
+    desc: "Define la visión, el estándar de calidad y los lineamientos de acompañamiento para todo el equipo.",
+    image: "/images/GoldModels.jpg",
+    featured: true,
+  },
+  {
+    key: "administrativa",
+    title: "Administrativa",
+    role: "Operación y agenda",
+    desc: "Organiza el día a día, coordina entrevistas y asegura una comunicación clara con cada candidata.",
+    image: "/images/GoldModels.jpg",
+    featured: false,
+  },
+  {
+    key: "contable",
+    title: "Contable",
+    role: "Pagos y soporte",
+    desc: "Gestiona pagos y documentación para que todo el proceso sea transparente y ordenado.",
+    image: "/images/GoldModels.jpg",
+    featured: false,
+  },
+] as const;
+---
+
+<section class="section team" id="equipo" aria-label="Equipo de trabajo">
+  <Container>
+    <header class="section-head section-head--center">
+      <span class="eyebrow">Equipo</span>
+      <h2>Equipo de trabajo</h2>
+      <p class="muted">Conoce las áreas clave que acompañan tu proceso de principio a fin.</p>
+    </header>
+
+    <div class="team-track" role="list">
+      {team.map((member) => (
+        <article class={`card team-card ${member.featured ? "is-featured" : ""}`} role="listitem">
+          <div class="team-media" style={`background-image: url('${member.image}')`} aria-hidden="true">
+            <div class="team-badge">{member.featured ? "Principal" : "Equipo"}</div>
+          </div>
+          <div class="team-body">
+            <h3>{member.title}</h3>
+            <p class="team-role">{member.role}</p>
+            <p class="muted">{member.desc}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p class="muted team-hint">En móvil puedes deslizar para ver más.</p>
+  </Container>
+</section>
+
+<style>
+  .section-head--center {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  .team {
+    background: var(--tint-2);
+  }
+
+  .team-track {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .team-card {
+    padding: 0;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  .team-card.is-featured {
+    border-color: color-mix(in srgb, var(--brand-gold-2) 45%, transparent);
+    box-shadow: 0 18px 40px rgba(2, 6, 23, 0.12);
+  }
+
+  .team-media {
+    min-height: 220px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+
+  .team-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.5) 100%);
+  }
+
+  .team-badge {
+    position: absolute;
+    z-index: 1;
+    left: 14px;
+    bottom: 14px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid color-mix(in srgb, #000 12%, transparent);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .team-body {
+    padding: 18px 18px 20px;
+  }
+
+  .team-role {
+    margin: 0 0 8px;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--text) 70%, transparent);
+  }
+
+  .team-hint {
+    margin-top: 16px;
+    text-align: center;
+    display: none;
+  }
+
+  @media (max-width: 980px) {
+    .team-track {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .team-track {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .team-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .team-card {
+      min-width: 86%;
+      scroll-snap-align: center;
+    }
+
+    .team-hint {
+      display: block;
+    }
+  }
+</style>
