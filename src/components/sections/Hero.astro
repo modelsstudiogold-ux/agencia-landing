@@ -7,65 +7,72 @@ const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${
 ---
 
 <section class="section hero" id="contenido">
+  <!-- Full-background image (like ambicion.studio) -->
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+
   <Container>
-    <div class="hero-grid">
-      <div class="hero-copy">
-        <h1 class="hero-title">
-          Sácale partido a tu potencial
-          <span class="hero-title__line">en un estudio con guía real</span>
-        </h1>
+    <div class="hero-copy">
+      <h1 class="hero-title">
+        Sácale partido a tu potencial
+        <span class="hero-title__line">en un estudio con guía real</span>
+      </h1>
 
-        <p class="lead">
-          {BRAND_TAGLINE}. Canal oficial por WhatsApp para resolver dudas y agendar entrevista.
-        </p>
+      <p class="lead">
+        {BRAND_TAGLINE}. Canal oficial por WhatsApp para resolver dudas y agendar entrevista.
+      </p>
 
-        <div class="cta-row hero-cta">
-          <Button size="lg" variant="whatsapp" href={whatsappUrl} target="_blank" rel="noopener">
-            Hablar por WhatsApp
-          </Button>
-        </div>
+      <div class="cta-row hero-cta">
+        <Button size="lg" variant="whatsapp" href={whatsappUrl} target="_blank" rel="noopener">
+          Hablar por WhatsApp
+        </Button>
       </div>
-
-		<div class="hero-media" aria-hidden="true"></div>
     </div>
   </Container>
 </section>
 
 <style>
   .hero {
-    padding-top: clamp(42px, 7vw, 84px);
-    padding-bottom: clamp(40px, 7vw, 84px);
-    min-height: 72vh;
+    position: relative;
+    padding-top: clamp(80px, 14vw, 160px);
+    padding-bottom: clamp(80px, 14vw, 160px);
+    min-height: 85vh;
     display: flex;
     align-items: center;
+    overflow: hidden;
   }
 
-  .hero-grid {
-    display: grid;
-    gap: 32px;
-    grid-template-columns: 1fr;
-    align-items: center;
-  }
-
-  .hero-media {
-    display: none;
-    min-height: 520px;
-    border-radius: 22px;
-    border: 1px solid color-mix(in srgb, #000 10%, transparent);
-    box-shadow: var(--shadow-soft);
-    background:
-      radial-gradient(560px 360px at 36% 32%, rgba(0, 0, 0, 0.22), transparent 62%),
-      linear-gradient(120deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06)),
-      url('/images/GoldModels.jpg');
+  /* Full-background image */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/hero-model.png');
     background-size: cover;
-    background-position: center;
+    background-position: center top;
+    z-index: 0;
   }
 
-  .lead {
-    font-size: 1.05rem;
-    color: var(--muted-text);
-    max-width: 680px;
-    margin-bottom: 18px;
+  /* Gradient overlay so text remains readable */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 248, 235, 0.92) 0%,
+      rgba(255, 248, 235, 0.75) 40%,
+      rgba(255, 248, 235, 0.3) 70%,
+      transparent 100%
+    );
+    z-index: 1;
+  }
+
+  .hero :global(.container) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-copy {
+    max-width: 580px;
   }
 
   .hero-title {
@@ -73,57 +80,49 @@ const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${
     letter-spacing: -0.02em;
     font-weight: 600;
     color: var(--text);
-    font-size: clamp(3rem, 5vw, 4.2rem);
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
     line-height: 0.95;
-    margin-bottom: 12px;
+    margin-bottom: 18px;
   }
 
   .hero-title__line {
     display: block;
   }
 
+  .lead {
+    font-size: 1.08rem;
+    color: var(--muted-text);
+    max-width: 480px;
+    margin-bottom: 22px;
+    line-height: 1.6;
+  }
+
   .hero-cta {
     margin-top: 10px;
   }
 
-  @media (min-width: 900px) {
-    .hero-grid {
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: clamp(24px, 4vw, 54px);
+  /* Mobile: overlay covers more so text is always readable */
+  @media (max-width: 768px) {
+    .hero {
+      min-height: 75vh;
     }
 
-    .hero-media {
-      display: block;
+    .hero-overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(255, 248, 235, 0.88) 0%,
+        rgba(255, 248, 235, 0.7) 50%,
+        rgba(255, 248, 235, 0.4) 100%
+      );
     }
-  }
 
-  @media (max-width: 980px) {
+    .hero-copy {
+      max-width: 100%;
+    }
+
     .hero-title {
-      color: var(--text);
+      max-width: 16ch;
+      text-wrap: balance;
     }
-  }
-
-  @media (max-width: 560px) {
-    .hero-title {
-      color: var(--text);
-			max-width: 18ch;
-			text-wrap: balance;
-    }
-
-    .lead {
-      color: var(--muted-text);
-    }
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 </style>
