@@ -110,19 +110,25 @@ const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${
     .hero-overlay {
       background: linear-gradient(
         180deg,
-        rgba(255, 248, 235, 0.88) 0%,
-        rgba(255, 248, 235, 0.7) 50%,
-        rgba(255, 248, 235, 0.4) 100%
+        rgba(255, 248, 235, 0.55) 0%,
+        rgba(255, 248, 235, 0.35) 40%,
+        rgba(255, 248, 235, 0.15) 100%
       );
     }
 
     .hero-copy {
       max-width: 100%;
+      text-shadow: 0 1px 8px rgba(255, 248, 235, 0.6);
     }
 
     .hero-title {
       max-width: 16ch;
       text-wrap: balance;
+      text-shadow: 0 1px 12px rgba(255, 248, 235, 0.8);
+    }
+
+    .lead {
+      text-shadow: 0 1px 6px rgba(255, 248, 235, 0.5);
     }
   }
 </style>
