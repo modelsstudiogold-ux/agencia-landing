@@ -20,7 +20,7 @@ const benefits = [
 ];
 ---
 
-<section class="section" id="beneficios" aria-label="Por qué elegirnos">
+<section class="section benefits" id="beneficios" aria-label="Por qué elegirnos">
   <Container>
     <header class="section-head section-head--center">
       <h2 class="headline">Por Qué Elegirnos</h2>
@@ -29,46 +29,79 @@ const benefits = [
   </Container>
 
   <div class="band" role="presentation">
-    <Container>
-      <div class="band-grid">
-        <div class="media" aria-hidden="true"></div>
+    <!-- Background image only inside band -->
+    <div class="benefits-bg" aria-hidden="true"></div>
+    <div class="benefits-overlay" aria-hidden="true"></div>
 
-        <div class="list" aria-label="Beneficios">
-          {benefits.map((item) => (
-            <article class="item">
-              <div class="icon" aria-hidden="true">
-                {item.icon === "pin" && (
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 22s7-4.4 7-12a7 7 0 1 0-14 0c0 7.6 7 12 7 12Z" stroke="currentColor" stroke-width="1.6" />
-                    <path d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="1.6" />
-                  </svg>
-                )}
-                {item.icon === "help" && (
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="currentColor" stroke-width="1.6" />
-                    <path d="M9.6 9.2a2.5 2.5 0 1 1 3.9 2.1c-.9.6-1.5 1.1-1.5 2.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-                    <path d="M12 17h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
-                  </svg>
-                )}
-                {item.icon === "heart" && (
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 21s-7-4.6-9.2-9.2C1.5 8.6 3.4 6 6.4 6c1.8 0 3.1 1 3.6 2 0.5-1 1.8-2 3.6-2 3 0 4.9 2.6 3.6 5.8C19 16.4 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
-                  </svg>
-                )}
-              </div>
-              <div class="copy">
-                <h3>{item.title}</h3>
-                <p class="muted">{item.desc}</p>
-              </div>
-            </article>
-          ))}
-        </div>
+    <Container>
+      <div class="list" aria-label="Beneficios">
+        {benefits.map((item) => (
+          <article class="item">
+            <div class="icon" aria-hidden="true">
+              {item.icon === "pin" && (
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 22s7-4.4 7-12a7 7 0 1 0-14 0c0 7.6 7 12 7 12Z" stroke="currentColor" stroke-width="1.6" />
+                  <path d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="1.6" />
+                </svg>
+              )}
+              {item.icon === "help" && (
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="currentColor" stroke-width="1.6" />
+                  <path d="M9.6 9.2a2.5 2.5 0 1 1 3.9 2.1c-.9.6-1.5 1.1-1.5 2.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                  <path d="M12 17h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+                </svg>
+              )}
+              {item.icon === "heart" && (
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 21s-7-4.6-9.2-9.2C1.5 8.6 3.4 6 6.4 6c1.8 0 3.1 1 3.6 2 0.5-1 1.8-2 3.6-2 3 0 4.9 2.6 3.6 5.8C19 16.4 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+                </svg>
+              )}
+            </div>
+            <div class="copy">
+              <h3>{item.title}</h3>
+              <p class="muted">{item.desc}</p>
+            </div>
+          </article>
+        ))}
       </div>
     </Container>
   </div>
 </section>
 
 <style>
+  .benefits {
+    position: relative;
+  }
+
+  /* Full-background image */
+  .benefits-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/benefits-model.png');
+    background-size: cover;
+    background-position: left center;
+    z-index: 0;
+  }
+
+  /* Gradient overlay – text on the RIGHT, model visible on the LEFT */
+  .benefits-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      270deg,
+      rgba(255, 248, 235, 0.94) 0%,
+      rgba(255, 248, 235, 0.8) 40%,
+      rgba(255, 248, 235, 0.35) 70%,
+      transparent 100%
+    );
+    z-index: 1;
+  }
+
+  .benefits :global(.container) {
+    position: relative;
+    z-index: 2;
+  }
+
   .section-head--center {
     text-align: center;
     margin-bottom: 18px;
@@ -88,35 +121,18 @@ const benefits = [
   }
 
   .band {
-    background: var(--tint-2);
+    position: relative;
+    overflow: hidden;
     border-top: 1px solid color-mix(in srgb, #000 8%, transparent);
     border-bottom: 1px solid color-mix(in srgb, #000 8%, transparent);
     padding: clamp(28px, 5vw, 54px) 0;
   }
 
-  .band-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(18px, 4vw, 44px);
-    align-items: center;
-  }
-
-  .media {
-    min-height: 300px;
-    border-radius: 22px;
-    border: 1px solid color-mix(in srgb, #000 10%, transparent);
-    box-shadow: var(--shadow-soft);
-    background:
-      radial-gradient(540px 340px at 40% 35%, rgba(0, 0, 0, 0.18), transparent 62%),
-      linear-gradient(120deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.06)),
-      url('/images/GoldModels.jpg');
-    background-size: cover;
-    background-position: center;
-  }
-
   .list {
     display: grid;
     gap: 18px;
+    max-width: 420px;
+    margin-left: auto;
   }
 
   .item {
@@ -124,6 +140,11 @@ const benefits = [
     grid-template-columns: 62px 1fr;
     gap: 16px;
     align-items: start;
+    background: rgba(255, 248, 235, 0.55);
+    backdrop-filter: blur(6px);
+    border-radius: 16px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
   }
 
   .icon {
@@ -153,7 +174,6 @@ const benefits = [
     pointer-events: none;
   }
 
-  /* Use primary color for SVG strokes as accent */
   .icon svg path,
   .icon svg circle,
   .icon svg rect,
@@ -172,13 +192,34 @@ const benefits = [
     margin: 0;
   }
 
-  @media (max-width: 900px) {
-    .band-grid {
-      grid-template-columns: 1fr;
+  /* Mobile */
+  @media (max-width: 768px) {
+    .benefits-bg {
+      background-size: cover;
+      background-position: 35% top;
     }
 
-    .media {
-      min-height: 220px;
+    .benefits-overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(255, 248, 235, 0.75) 0%,
+        rgba(255, 248, 235, 0.45) 45%,
+        rgba(255, 248, 235, 0.15) 100%
+      );
+    }
+
+    .list {
+      max-width: 100%;
+      margin-left: 0;
+    }
+
+    .item {
+      background: rgba(255, 248, 235, 0.7);
+    }
+
+    .copy h3,
+    .copy p {
+      text-shadow: 0 1px 6px rgba(255, 248, 235, 0.5);
     }
   }
 </style>
