@@ -12,15 +12,15 @@ const buildWhatsappUrl = (locationName: string) => {
 
 <section class="section" id="sedes">
   <Container>
-    <header class="section-head">
-      <span class="eyebrow">Bogotá</span>
-      <h2>Sedes disponibles: Modelia y Normandía</h2>
-      <p class="muted">
-        Elige la sede que te quede mejor. Te explicamos el proceso, resolvemos dudas y confirmamos requisitos (+18)
-        antes de agendar.
-      </p>
+    <header class="section-head section-head--center">
+      <h2 class="headline">Sedes Disponibles</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="muted">Elige la sede que te quede mejor. Te explicamos el proceso, resolvemos dudas y confirmamos requisitos (+18) antes de agendar.</p>
     </header>
+  </Container>
 
+  <div class="band" role="presentation">
+    <Container>
     <div class="grid locations">
       {LOCATIONS.map((location) => (
         <article class="card location" aria-label={`Sede ${location.name}`}>
@@ -37,11 +37,36 @@ const buildWhatsappUrl = (locationName: string) => {
         </article>
       ))}
     </div>
-
-  </Container>
+    </Container>
+  </div>
 </section>
 
 <style>
+  .section-head--center {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  .headline {
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .rule {
+    width: 220px;
+    height: 1px;
+    background: color-mix(in srgb, #000 55%, transparent);
+    margin: 0 auto;
+  }
+
+  .band {
+    background: var(--tint-2);
+    border-top: 1px solid color-mix(in srgb, #000 8%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, #000 8%, transparent);
+    padding: clamp(28px, 5vw, 54px) 0;
+  }
+
   .locations {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }

@@ -5,12 +5,15 @@ import { FAQ_ITEMS } from "../../lib/constants";
 
 <section class="section faq" id="faq" aria-label="Preguntas frecuentes">
   <Container>
-    <header class="faq-head">
-      <h2 class="faq-title">Preguntas Frecuentes</h2>
-      <div class="faq-rule" aria-hidden="true"></div>
-      <p class="faq-sub">Si aún tienes dudas, escribe por WhatsApp o aplica y te contactamos.</p>
+    <header class="section-head section-head--center">
+      <h2 class="headline">Preguntas Frecuentes</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="muted">Si aún tienes dudas, escribe por WhatsApp o aplica y te contactamos.</p>
     </header>
+  </Container>
 
+  <div class="band" role="presentation">
+    <Container>
     <div class="faq-grid">
       {FAQ_ITEMS.map((item) => (
         <details class="faq-card">
@@ -24,7 +27,8 @@ import { FAQ_ITEMS } from "../../lib/constants";
         </details>
       ))}
     </div>
-  </Container>
+    </Container>
+  </div>
 </section>
 
 <style>
@@ -53,30 +57,29 @@ import { FAQ_ITEMS } from "../../lib/constants";
     z-index: 1;
   }
 
-  .faq-head {
-    max-width: 820px;
-    margin-bottom: 22px;
+  .section-head--center {
+    text-align: center;
+    margin-bottom: 18px;
   }
 
-  .faq-title {
-    margin: 0 0 10px;
+  .headline {
     font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
     font-weight: 600;
-    letter-spacing: -0.01em;
-    font-size: clamp(2rem, 3.2vw, 2.6rem);
+    margin-bottom: 10px;
   }
 
-  .faq-rule {
+  .rule {
     width: 220px;
-    height: 2px;
-    background: color-mix(in srgb, var(--text) 22%, transparent);
-    border-radius: 99px;
-    margin-bottom: 12px;
+    height: 1px;
+    background: color-mix(in srgb, #000 55%, transparent);
+    margin: 0 auto;
   }
 
-  .faq-sub {
-    margin: 0;
-    color: var(--muted-text);
+  .band {
+    background: var(--tint-2);
+    border-top: 1px solid color-mix(in srgb, #000 8%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, #000 8%, transparent);
+    padding: clamp(28px, 5vw, 54px) 0;
   }
 
   .faq-grid {

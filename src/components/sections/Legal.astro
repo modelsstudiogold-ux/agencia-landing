@@ -4,15 +4,15 @@ import Container from "../ui/Container.astro";
 
 <section class="section" id="legal">
   <Container>
-    <header class="section-head">
-      <span class="eyebrow">Transparencia</span>
-      <h2>Privacidad, mayoría de edad y tratamiento de datos</h2>
-      <p class="muted">
-        Esta página está orientada a reclutamiento de talento. La comunicación es no explícita y el proceso aplica
-        únicamente para mayores de 18 años.
-      </p>
+    <header class="section-head section-head--center">
+      <h2 class="headline">Privacidad y Transparencia</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="muted">Esta página está orientada a reclutamiento de talento. La comunicación es no explícita y el proceso aplica únicamente para mayores de 18 años.</p>
     </header>
+  </Container>
 
+  <div class="band" role="presentation">
+    <Container>
     <div class="grid legal-grid">
       <article class="card">
         <h3>+18 (requisito)</h3>
@@ -37,10 +37,36 @@ import Container from "../ui/Container.astro";
     <p class="muted note">
       Si deseas actualizar o eliminar tu información, puedes solicitarlo escribiéndonos por WhatsApp.
     </p>
-  </Container>
+    </Container>
+  </div>
 </section>
 
 <style>
+  .section-head--center {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  .headline {
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .rule {
+    width: 220px;
+    height: 1px;
+    background: color-mix(in srgb, #000 55%, transparent);
+    margin: 0 auto;
+  }
+
+  .band {
+    background: var(--tint-2);
+    border-top: 1px solid color-mix(in srgb, #000 8%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, #000 8%, transparent);
+    padding: clamp(28px, 5vw, 54px) 0;
+  }
+
   .legal-grid {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   }
