@@ -7,10 +7,7 @@ import { AGENCY_NAME, SOCIAL_LINKS } from "../../lib/constants";
   <Container>
     <div class="footer-inner">
       <a class="footer-logo" href="/" aria-label="Gold Models Studio">
-        <span class="brand__text">
-          <span class="brand__name">GOLD MODELS</span>
-          <span class="brand__sub">studio</span>
-        </span>
+        <img class="footer-logo__img" src="/images/icons/gold-models-dorado.png" alt="Gold Models Studio" />
       </a>
 
       <div class="social" aria-label="Redes sociales">
@@ -50,8 +47,12 @@ import { AGENCY_NAME, SOCIAL_LINKS } from "../../lib/constants";
     justify-content: center;
   }
 
-  .footer-logo .brand__text {
-    transform: scale(1.05);
+  .footer-logo__img {
+    height: 120px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    mix-blend-mode: multiply;
   }
 
   .social {
