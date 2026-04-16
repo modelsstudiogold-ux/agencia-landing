@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://goldmodelsstudio.com/sitemap-index.xml

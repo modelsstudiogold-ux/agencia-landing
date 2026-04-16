@@ -8,7 +8,7 @@ export type SeoProps = {
 const DEFAULT_TITLE = "Gold Models | Oportunidades Remotas";
 const DEFAULT_DESCRIPTION =
   "Aplica hoy con Gold Models a oportunidades profesionales remotas. Proceso rápido, pagos transparentes y soporte continuo para mayores de 18 años.";
-const DEFAULT_IMAGE = "/images/logo-coral.svg";
+const DEFAULT_IMAGE = "/images/og-image.png";
 
 export const buildSeo = (props: SeoProps = {}) => {
   const title = props.title ?? DEFAULT_TITLE;

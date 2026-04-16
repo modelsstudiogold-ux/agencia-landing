@@ -11,7 +11,7 @@ import Legal from "../components/sections/Legal.astro";
 import Footer from "../components/sections/Footer.astro";
 import StickyWhatsApp from "../components/ui/StickyWhatsApp.astro";
 import { buildSeo } from "../lib/seo";
-import { AGENCY_NAME, FAQ_ITEMS } from "../lib/constants";
+import { AGENCY_NAME, FAQ_ITEMS, SOCIAL_LINKS, WHATSAPP_NUMBER } from "../lib/constants";
 
 const seo = buildSeo({
   title: "Aplica en Bogotá (Modelia y Normandía) | Gold Models",
@@ -20,13 +20,64 @@ const seo = buildSeo({
   url: Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined,
 });
 
+const siteUrl = seo.url ?? "https://goldmodelsstudio.com";
+
 const schema = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
       name: AGENCY_NAME,
-      url: seo.url,
+      url: siteUrl,
+      logo: `${siteUrl}/images/icons/gold-models-dorado.png`,
+      sameAs: [SOCIAL_LINKS.instagram, SOCIAL_LINKS.tiktok],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: WHATSAPP_NUMBER,
+        contactType: "customer service",
+        areaServed: "CO",
+        availableLanguage: "es",
+      },
+    },
+    {
+      "@type": "LocalBusiness",
+      name: `${AGENCY_NAME} — Sede Modelia`,
+      image: `${siteUrl}/images/icons/gold-models-dorado.png`,
+      url: siteUrl,
+      telephone: WHATSAPP_NUMBER,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Bogotá",
+        addressRegion: "Cundinamarca",
+        addressCountry: "CO",
+        streetAddress: "Modelia",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 4.6684,
+        longitude: -74.1198,
+      },
+      areaServed: "Bogotá",
+    },
+    {
+      "@type": "LocalBusiness",
+      name: `${AGENCY_NAME} — Sede Normandía`,
+      image: `${siteUrl}/images/icons/gold-models-dorado.png`,
+      url: siteUrl,
+      telephone: WHATSAPP_NUMBER,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Bogotá",
+        addressRegion: "Cundinamarca",
+        addressCountry: "CO",
+        streetAddress: "Normandía",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 4.6610,
+        longitude: -74.1063,
+      },
+      areaServed: "Bogotá",
     },
     {
       "@type": "FAQPage",

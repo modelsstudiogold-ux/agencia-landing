@@ -19,7 +19,7 @@ import { FAQ_ITEMS } from "../../lib/constants";
         <details class="faq-card">
           <summary class="faq-summary">
             <span class="faq-plus" aria-hidden="true">+</span>
-            <span class="faq-q">{item.question}</span>
+            <h3 class="faq-q">{item.question}</h3>
           </summary>
           <div class="faq-a">
             <p>{item.answer}</p>
@@ -134,6 +134,7 @@ import { FAQ_ITEMS } from "../../lib/constants";
   }
 
   .faq-q {
+    margin: 0;
     font-weight: 700;
     color: color-mix(in srgb, var(--text) 92%, transparent);
     font-size: 0.98rem;

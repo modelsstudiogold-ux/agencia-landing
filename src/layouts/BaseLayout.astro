@@ -8,6 +8,7 @@ type LayoutProps = SeoProps & { schema?: unknown };
 const { title, description, image, url }: SeoProps = buildSeo(Astro.props);
 const { schema } = Astro.props as LayoutProps;
 const canonical = url ?? Astro.site?.href ?? undefined;
+const absoluteImage = image?.startsWith('http') ? image : new URL(image ?? '/images/og-image.png', Astro.site).href;
 ---
 
 <!DOCTYPE html>
@@ -23,16 +24,19 @@ const canonical = url ?? Astro.site?.href ?? undefined;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
     <link rel="shortcut icon" type="image/svg+xml" href="/favicon.svg?v=2" />
     <link rel="icon" sizes="any" href="/favicon.svg?v=2" />
-    <link rel="apple-touch-icon" href="/favicon.svg?v=2" />
+    <link rel="apple-touch-icon" href="/images/icons/gold-models-dorado.png" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title ?? seoDefaults.title} />
     <meta property="og:description" content={description ?? seoDefaults.description} />
-    <meta property="og:image" content={image ?? seoDefaults.image} />
+    <meta property="og:image" content={absoluteImage} />
     {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:site_name" content="Gold Models" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title ?? seoDefaults.title} />
     <meta name="twitter:description" content={description ?? seoDefaults.description} />
-    <meta name="twitter:image" content={image ?? seoDefaults.image} />
+    <meta name="twitter:image" content={absoluteImage} />
+    <meta name="theme-color" content="#b77a12" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -46,7 +50,7 @@ const canonical = url ?? Astro.site?.href ?? undefined;
     <header class="top-bar">
       <div class="container top-bar__inner">
         <a class="brand" href="/">
-          <img class="brand__logo" src="/images/icons/gold-models-dorado.png" alt="Gold Models Studio" />
+          <img class="brand__logo" src="/images/icons/gold-models-dorado.png" alt="Gold Models Studio" width="160" height="80" />
         </a>
         <nav class="nav nav--desktop" aria-label="Navegación principal">
           <a class="nav__link" href="#beneficios">Por qué elegirnos</a>
