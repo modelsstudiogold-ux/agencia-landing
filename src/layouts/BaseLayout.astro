@@ -16,6 +16,7 @@ const canonical = url ?? Astro.site?.href ?? undefined;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description ?? seoDefaults.description} />
+    <meta name="robots" content="index, follow" />
     <meta name="generator" content={Astro.generator} />
     <title>{title ?? seoDefaults.title}</title>
     {canonical && <link rel="canonical" href={canonical} />}
