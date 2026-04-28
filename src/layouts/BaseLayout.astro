@@ -9,6 +9,7 @@ const { title, description, image, url }: SeoProps = buildSeo(Astro.props);
 const { schema } = Astro.props as LayoutProps;
 const canonical = url ?? Astro.site?.href ?? undefined;
 const absoluteImage = image?.startsWith('http') ? image : new URL(image ?? '/images/og-image.png', Astro.site).href;
+const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 ---
 
 <!DOCTYPE html>
@@ -42,6 +43,16 @@ const absoluteImage = image?.startsWith('http') ? image : new URL(image ?? '/ima
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
+    {gaMeasurementId && <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}></script>}
+    {gaMeasurementId && (
+      <script is:inline>
+        {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag('js', new Date());
+gtag('config', '${gaMeasurementId}', { page_path: window.location.pathname });`}
+      </script>
+    )}
     {schema && <script type="application/ld+json">{JSON.stringify(schema)}</script>}
   </head>
   <body>
