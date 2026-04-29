@@ -3,7 +3,7 @@
 declare const Astro: import("astro").AstroGlobal;
 
 interface ImportMetaEnv {
-	readonly PUBLIC_GA_MEASUREMENT_ID?: string;
+	readonly PUBLIC_GTM_CONTAINER_ID?: string;
 }
 
 interface ImportMeta {

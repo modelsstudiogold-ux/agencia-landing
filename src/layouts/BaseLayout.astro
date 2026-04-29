@@ -9,7 +9,7 @@ const { title, description, image, url }: SeoProps = buildSeo(Astro.props);
 const { schema } = Astro.props as LayoutProps;
 const canonical = url ?? Astro.site?.href ?? undefined;
 const absoluteImage = image?.startsWith('http') ? image : new URL(image ?? '/images/og-image.png', Astro.site).href;
-const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+const gtmContainerId = import.meta.env.PUBLIC_GTM_CONTAINER_ID ?? 'GTM-5G7V6P3H';
 ---
 
 <!DOCTYPE html>
@@ -43,19 +43,28 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
-    {gaMeasurementId && <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}></script>}
-    {gaMeasurementId && (
+    {gtmContainerId && (
       <script is:inline>
-        {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-window.gtag = gtag;
-gtag('js', new Date());
-gtag('config', '${gaMeasurementId}', { page_path: window.location.pathname });`}
+        {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${gtmContainerId}');`}
       </script>
     )}
     {schema && <script type="application/ld+json">{JSON.stringify(schema)}</script>}
   </head>
   <body>
+    {gtmContainerId && (
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${gtmContainerId}`}
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"
+        ></iframe>
+      </noscript>
+    )}
     <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
     <header class="top-bar">
       <div class="container top-bar__inner">
