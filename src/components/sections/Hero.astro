@@ -23,7 +23,17 @@ const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${
       </p>
 
       <div class="cta-row hero-cta">
-        <Button size="lg" variant="whatsapp" href={whatsappUrl} target="_blank" rel="noopener">
+        <Button
+          size="lg"
+          variant="whatsapp"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener"
+          data-analytics-event="click_primary_cta"
+          data-analytics-cta-location="hero"
+          data-analytics-cta-type="whatsapp"
+          data-analytics-whatsapp-type="hero_main_cta"
+        >
           Hablar por WhatsApp
         </Button>
       </div>

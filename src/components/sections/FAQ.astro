@@ -15,8 +15,12 @@ import { FAQ_ITEMS } from "../../lib/constants";
   <div class="band" role="presentation">
     <Container>
     <div class="faq-grid">
-      {FAQ_ITEMS.map((item) => (
-        <details class="faq-card">
+      {FAQ_ITEMS.map((item, index) => (
+        <details
+          class="faq-card"
+          data-analytics-faq-id={`faq_${index + 1}`}
+          data-analytics-faq-question={item.question}
+        >
           <summary class="faq-summary">
             <span class="faq-plus" aria-hidden="true">+</span>
             <h3 class="faq-q">{item.question}</h3>

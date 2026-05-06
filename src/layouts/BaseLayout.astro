@@ -3,17 +3,18 @@ import "../styles/global.css";
 import type { SeoProps } from "../lib/seo";
 import { buildSeo, seoDefaults } from "../lib/seo";
 
-type LayoutProps = SeoProps & { schema?: unknown };
+type LayoutProps = SeoProps & { schema?: unknown; landingVariant?: string };
 
 const { title, description, image, url }: SeoProps = buildSeo(Astro.props);
 const { schema } = Astro.props as LayoutProps;
 const canonical = url ?? Astro.site?.href ?? undefined;
 const absoluteImage = image?.startsWith('http') ? image : new URL(image ?? '/images/og-image.png', Astro.site).href;
 const gtmContainerId = import.meta.env.PUBLIC_GTM_CONTAINER_ID ?? 'GTM-5G7V6P3H';
+const landingVariant = (Astro.props as LayoutProps).landingVariant ?? 'landing_actual';
 ---
 
 <!DOCTYPE html>
-<html lang="es" data-theme="coral">
+<html lang="es" data-theme="coral" data-landing-variant={landingVariant}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -93,6 +94,154 @@ const gtmContainerId = import.meta.env.PUBLIC_GTM_CONTAINER_ID ?? 'GTM-5G7V6P3H'
           link.closest('details')?.removeAttribute('open');
         });
       });
+
+      (function () {
+        const analyticsWindow = window as Window & { dataLayer: Array<Record<string, unknown>> };
+        analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
+
+        const getLandingVariant = () => {
+          const variant = document.documentElement.getAttribute('data-landing-variant');
+          return variant || 'landing_actual';
+        };
+
+        const getBaseParams = () => ({
+          landing_variant: getLandingVariant(),
+          page_path: window.location.pathname,
+          page_title: document.title,
+        });
+
+        const pushEvent = (eventName: string, params: Record<string, unknown>) => {
+          analyticsWindow.dataLayer.push({
+            event: eventName,
+            ...getBaseParams(),
+            ...params,
+          });
+        };
+
+        const getUtmParams = () => {
+          const query = new URLSearchParams(window.location.search);
+          return {
+            utm_source: query.get('utm_source') || undefined,
+            utm_medium: query.get('utm_medium') || undefined,
+            utm_campaign: query.get('utm_campaign') || undefined,
+            utm_content: query.get('utm_content') || undefined,
+            utm_term: query.get('utm_term') || undefined,
+          };
+        };
+
+        const isWhatsAppUrl = (href: string | null | undefined): boolean => /wa\.me|whatsapp\.com/i.test(href || '');
+
+        const parseAnalyticsParamsFromDataset = (dataset: DOMStringMap): Record<string, string> => {
+          const params: Record<string, string> = {};
+
+          Object.entries(dataset).forEach(([key, value]) => {
+            if (!value || !key.startsWith('analytics') || key === 'analyticsEvent') {
+              return;
+            }
+
+            const rawKey = key.slice('analytics'.length);
+            if (!rawKey) {
+              return;
+            }
+
+            const snakeKey = rawKey
+              .replace(/^[A-Z]/, (s) => s.toLowerCase())
+              .replace(/[A-Z]/g, (s) => `_${s.toLowerCase()}`);
+
+            params[snakeKey] = value;
+          });
+
+          return params;
+        };
+
+        const sendLandingView = () => {
+          pushEvent('landing_view', getUtmParams());
+        };
+
+        const setupScrollDepthTracking = () => {
+          const fired = new Set();
+          const thresholds = [50, 75];
+
+          const onScroll = () => {
+            const doc = document.documentElement;
+            const total = doc.scrollHeight - window.innerHeight;
+            if (total <= 0) {
+              return;
+            }
+
+            const scrollPercent = Math.round((window.scrollY / total) * 100);
+
+            thresholds.forEach((threshold) => {
+              if (scrollPercent >= threshold && !fired.has(threshold)) {
+                fired.add(threshold);
+                pushEvent('scroll_depth', { scroll_percent: threshold });
+              }
+            });
+          };
+
+          window.addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
+        };
+
+        const setupClickTracking = () => {
+          document.addEventListener('click', (event) => {
+            const element = event.target instanceof Element ? event.target.closest('[data-analytics-event],a') : null;
+            if (!element) {
+              return;
+            }
+
+            if (element instanceof HTMLElement && element.dataset.analyticsEvent) {
+              const customParams = parseAnalyticsParamsFromDataset(element.dataset);
+              if (!customParams.cta_text) {
+                const text = element.textContent?.trim();
+                if (text) {
+                  customParams.cta_text = text;
+                }
+              }
+
+              pushEvent(element.dataset.analyticsEvent, customParams);
+            }
+
+            if (element instanceof HTMLAnchorElement && isWhatsAppUrl(element.href)) {
+              const customParams = parseAnalyticsParamsFromDataset(element.dataset);
+
+              pushEvent('click_whatsapp', {
+                cta_location: customParams.cta_location || 'unknown',
+                cta_text: customParams.cta_text || element.textContent?.trim() || 'WhatsApp',
+                whatsapp_type: customParams.whatsapp_type || 'unknown',
+              });
+            }
+          });
+        };
+
+        const setupFaqTracking = () => {
+          document.querySelectorAll('details[data-analytics-faq-id]').forEach((node) => {
+            if (!(node instanceof HTMLDetailsElement)) {
+              return;
+            }
+
+            const detail = node;
+            detail.addEventListener('toggle', () => {
+              if (!detail.open) {
+                return;
+              }
+
+              const faqId = detail.getAttribute('data-analytics-faq-id') || 'faq_unknown';
+              const faqQuestion = detail.getAttribute('data-analytics-faq-question') || 'faq_unknown';
+
+              pushEvent('faq_open', {
+                faq_id: faqId,
+                faq_question: faqQuestion,
+              });
+            });
+          });
+        };
+
+        sendLandingView();
+        setupScrollDepthTracking();
+        setupClickTracking();
+        setupFaqTracking();
+      })();
     </script>
     <slot />
   </body>
