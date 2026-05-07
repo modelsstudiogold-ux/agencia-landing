@@ -280,6 +280,69 @@ const schema = {
       </Container>
     </section>
   </main>
+  <script is:inline define:vars={{ LANDING_VARIANT }}>
+    window.dataLayer = window.dataLayer || [];
+
+    const pushLandingEvent = (eventName, params = {}) => {
+      window.dataLayer.push({
+        event: eventName,
+        landing_variant: LANDING_VARIANT,
+        page_path: window.location.pathname,
+        ...params,
+      });
+    };
+
+    pushLandingEvent("page_view_landing", {
+      page_title: document.title,
+    });
+
+    document.querySelectorAll("[data-event='click_whatsapp']").forEach((element) => {
+      element.addEventListener("click", () => {
+        const ctaLocation = element.getAttribute("data-cta-location") || "";
+        const eventParams = {
+          cta_location: ctaLocation,
+          cta_text: element.getAttribute("data-cta-text") || element.textContent?.trim() || "",
+          whatsapp_type: element.getAttribute("data-whatsapp-type") || "",
+        };
+
+        pushLandingEvent("click_whatsapp", eventParams);
+
+        if (ctaLocation === "hero") {
+          pushLandingEvent("click_cta_principal", eventParams);
+        }
+      });
+    });
+
+    document.querySelectorAll("[data-event='click_faq'] summary").forEach((summary) => {
+      summary.addEventListener("click", () => {
+        const faq = summary.closest("[data-event='click_faq']");
+
+        pushLandingEvent("click_faq", {
+          faq_question: faq?.getAttribute("data-faq-question") || "",
+        });
+      });
+    });
+
+    const scrollDepthMarks = [25, 50, 75, 100];
+    const reachedDepths = new Set();
+
+    const trackScrollDepth = () => {
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const depth = scrollableHeight <= 0 ? 100 : Math.round((window.scrollY / scrollableHeight) * 100);
+
+      scrollDepthMarks.forEach((mark) => {
+        if (depth >= mark && !reachedDepths.has(mark)) {
+          reachedDepths.add(mark);
+          pushLandingEvent("scroll_depth", {
+            scroll_depth: mark,
+          });
+        }
+      });
+    };
+
+    window.addEventListener("scroll", trackScrollDepth, { passive: true });
+    window.addEventListener("load", trackScrollDepth);
+  </script>
   <Footer />
   <StickyWhatsApp />
 </BaseLayout>

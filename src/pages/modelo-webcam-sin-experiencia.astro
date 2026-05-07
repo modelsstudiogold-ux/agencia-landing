@@ -1,0 +1,681 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Footer from "../components/sections/Footer.astro";
+import Button from "../components/ui/Button.astro";
+import Container from "../components/ui/Container.astro";
+import StickyWhatsApp from "../components/ui/StickyWhatsApp.astro";
+import { buildSeo } from "../lib/seo";
+import { AGENCY_NAME, SOCIAL_LINKS, WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from "../lib/constants";
+
+const LANDING_VARIANT = "landing_capacitacion";
+const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(
+  WHATSAPP_MESSAGE,
+)}`;
+
+const seo = buildSeo({
+  title: "Gold Models Studio | Empieza con capacitaci\u00f3n y acompa\u00f1amiento",
+  description:
+    "Conoce c\u00f3mo iniciar con orientaci\u00f3n, capacitaci\u00f3n y acompa\u00f1amiento profesional en Gold Models Studio. Resuelve tus dudas por WhatsApp.",
+  url: Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined,
+});
+
+const originUrl = Astro.site?.origin ?? "https://goldmodelsstudio.com";
+const siteUrl = seo.url ?? `${originUrl}/modelo-webcam-sin-experiencia`;
+
+const noExperienceItems = [
+  "Puedes recibir orientaci\u00f3n inicial.",
+  "Te explicamos c\u00f3mo funciona el proceso.",
+  "Puedes resolver tus dudas antes de tomar una decisi\u00f3n.",
+  "El acompa\u00f1amiento es paso a paso.",
+  "No necesitas iniciar sin informaci\u00f3n.",
+];
+
+const learningItems = [
+  "C\u00f3mo funciona el proceso.",
+  "Buenas pr\u00e1cticas para iniciar.",
+  "Uso b\u00e1sico de herramientas.",
+  "Manejo de horarios.",
+  "Recomendaciones para tus primeros pasos.",
+  "Acompa\u00f1amiento del equipo.",
+];
+
+const processSteps = [
+  "Escr\u00edbenos por WhatsApp.",
+  "Resolvemos tus dudas.",
+  "Te explicamos requisitos y condiciones.",
+  "Recibes orientaci\u00f3n inicial.",
+  "Decides si quieres continuar.",
+];
+
+const benefits = [
+  "Capacitaci\u00f3n inicial.",
+  "Acompa\u00f1amiento profesional.",
+  "Flexibilidad.",
+  "Ambiente privado.",
+  "Orientaci\u00f3n personalizada.",
+  "Proceso claro.",
+  "Crecimiento seg\u00fan dedicaci\u00f3n y desempe\u00f1o.",
+];
+
+const faqItems = [
+  {
+    question: "\u00bfPuedo iniciar sin experiencia?",
+    answer:
+      "S\u00ed. Puedes escribirnos para recibir orientaci\u00f3n inicial y entender el proceso antes de decidir si quieres continuar.",
+  },
+  {
+    question: "\u00bfMe capacitan?",
+    answer:
+      "S\u00ed. Te explicamos las bases, las buenas pr\u00e1cticas y los primeros pasos para iniciar con mayor claridad.",
+  },
+  {
+    question: "\u00bfQu\u00e9 pasa si tengo dudas antes de iniciar?",
+    answer:
+      "Puedes resolverlas por WhatsApp con un asesor. La idea es que avances solo cuando tengas informaci\u00f3n suficiente.",
+  },
+  {
+    question: "\u00bfPuedo recibir informaci\u00f3n antes de tomar una decisi\u00f3n?",
+    answer:
+      "S\u00ed. Primero conversamos, revisamos tus preguntas y te explicamos requisitos, condiciones y pasos generales.",
+  },
+  {
+    question: "\u00bfHay acompa\u00f1amiento al inicio?",
+    answer:
+      "S\u00ed. El proceso inicial incluye orientaci\u00f3n y acompa\u00f1amiento para que conozcas la forma de trabajo.",
+  },
+  {
+    question: "\u00bfQu\u00e9 requisitos debo cumplir?",
+    answer:
+      "Debes ser mayor de 18 a\u00f1os, contar con disponibilidad y estar dispuesta a conocer el proceso de manera responsable.",
+  },
+  {
+    question: "\u00bfMi informaci\u00f3n es privada?",
+    answer:
+      "Tratamos tu informaci\u00f3n con discreci\u00f3n y solo usamos los datos necesarios para orientarte sobre el proceso.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: AGENCY_NAME,
+      url: siteUrl,
+      logo: `${originUrl}/images/icons/gold-models-dorado.png`,
+      sameAs: [SOCIAL_LINKS.instagram, SOCIAL_LINKS.tiktok],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: WHATSAPP_NUMBER,
+        contactType: "customer service",
+        areaServed: "CO",
+        availableLanguage: "es",
+      },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faqItems.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+  ],
+};
+---
+
+<BaseLayout {...seo} schema={schema}>
+  <main class="page capacitacion-page" id="contenido" data-landing-variant={LANDING_VARIANT}>
+    <section class="training-hero" aria-labelledby="training-title">
+      <div class="training-hero__bg" aria-hidden="true"></div>
+      <div class="training-hero__overlay" aria-hidden="true"></div>
+
+      <Container>
+        <div class="training-hero__grid">
+          <div class="training-hero__copy">
+            <span class="eyebrow">Gold Models Studio</span>
+            <h1 id="training-title">Empieza con gu&iacute;a, capacitaci&oacute;n y acompa&ntilde;amiento paso a paso</h1>
+            <p class="training-lead">
+              Si est&aacute;s interesada pero no sabes por d&oacute;nde empezar, nuestro equipo te orienta, resuelve tus dudas y te acompa&ntilde;a en el proceso inicial.
+            </p>
+            <div class="cta-row">
+              <Button
+                size="lg"
+                variant="whatsapp"
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener"
+                data-event="click_whatsapp"
+                data-landing-variant={LANDING_VARIANT}
+                data-cta-location="hero"
+                data-cta-text="Recibir orientaci&oacute;n"
+                data-whatsapp-type="main_cta"
+              >
+                Recibir orientaci&oacute;n
+              </Button>
+            </div>
+          </div>
+
+          <aside class="training-panel" aria-label="Pilares de capacitaci&oacute;n">
+            <span>Sin experiencia previa</span>
+            <span>Capacitaci&oacute;n inicial</span>
+            <span>Acompa&ntilde;amiento paso a paso</span>
+          </aside>
+        </div>
+      </Container>
+    </section>
+
+    <section class="section intro-section" aria-labelledby="intro-heading">
+      <Container>
+        <div class="split-layout">
+          <header class="section-head">
+            <span class="eyebrow">Sin experiencia previa</span>
+            <h2 id="intro-heading">Puedes empezar con informaci&oacute;n clara</h2>
+            <p class="muted">
+              No tienes que tomar una decisi&oacute;n sin entender el proceso. Te damos una primera orientaci&oacute;n para que sepas qu&eacute; esperar.
+            </p>
+          </header>
+
+          <div class="check-list">
+            {noExperienceItems.map((item) => (
+              <article class="check-card">
+                <span aria-hidden="true"></span>
+                <p>{item}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <section class="section learning-section" aria-labelledby="learning-heading">
+      <Container>
+        <header class="section-head section-head--center">
+          <span class="eyebrow">Qu&eacute; aprender&aacute;s</span>
+          <h2 id="learning-heading">Bases pr&aacute;cticas para tus primeros pasos</h2>
+          <p class="muted">
+            La capacitaci&oacute;n inicial est&aacute; pensada para resolver dudas comunes y ayudarte a iniciar con orden.
+          </p>
+        </header>
+
+        <div class="learning-grid">
+          {learningItems.map((item, index) => (
+            <article class="learning-card">
+              <span class="learning-card__number">{index + 1}</span>
+              <h3>{item}</h3>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="section process-section" aria-labelledby="process-heading">
+      <Container>
+        <header class="section-head">
+          <span class="eyebrow">Proceso para empezar</span>
+          <h2 id="process-heading">Cinco pasos simples para recibir orientaci&oacute;n</h2>
+        </header>
+
+        <div class="process-grid">
+          {processSteps.map((step, index) => (
+            <article class="process-card">
+              <span>{index + 1}</span>
+              <h3>{step}</h3>
+            </article>
+          ))}
+        </div>
+
+        <div class="section-cta">
+          <Button
+            size="lg"
+            variant="whatsapp"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener"
+            data-event="click_whatsapp"
+            data-landing-variant={LANDING_VARIANT}
+            data-cta-location="process"
+            data-cta-text="Resolver mis dudas"
+            data-whatsapp-type="process_cta"
+          >
+            Resolver mis dudas
+          </Button>
+        </div>
+      </Container>
+    </section>
+
+    <section class="section benefits-section" id="beneficios" aria-labelledby="benefits-heading">
+      <Container>
+        <header class="section-head section-head--center">
+          <span class="eyebrow">Beneficios</span>
+          <h2 id="benefits-heading">Un inicio acompa&ntilde;ado y profesional</h2>
+          <p class="muted">
+            Encuentra una oportunidad flexible con crecimiento relacionado con tu dedicaci&oacute;n, aprendizaje y desempe&ntilde;o.
+          </p>
+        </header>
+
+        <div class="benefit-grid">
+          {benefits.map((benefit) => (
+            <article class="benefit-card">
+              <span aria-hidden="true"></span>
+              <h3>{benefit}</h3>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="section faq-section" id="faq" aria-labelledby="faq-heading">
+      <Container>
+        <header class="section-head section-head--center">
+          <span class="eyebrow">Preguntas frecuentes</span>
+          <h2 id="faq-heading">Aclara tus dudas antes de continuar</h2>
+        </header>
+
+        <div class="faq-grid">
+          {faqItems.map((item) => (
+            <details
+              class="faq-card"
+              data-event="click_faq"
+              data-landing-variant={LANDING_VARIANT}
+              data-faq-question={item.question}
+            >
+              <summary>
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <h3>{item.question}</h3>
+              </summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="section final-section" aria-labelledby="final-heading">
+      <Container>
+        <div class="final-card">
+          <div>
+            <span class="eyebrow">Siguiente paso</span>
+            <h2 id="final-heading">Da el primer paso con orientaci&oacute;n profesional</h2>
+            <p class="muted">Habla con un asesor por el canal oficial y resuelve tus dudas con claridad.</p>
+          </div>
+          <Button
+            size="lg"
+            variant="whatsapp"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener"
+            data-event="click_whatsapp"
+            data-landing-variant={LANDING_VARIANT}
+            data-cta-location="final_cta"
+            data-cta-text="Hablar por WhatsApp"
+            data-whatsapp-type="footer_cta"
+          >
+            Hablar por WhatsApp
+          </Button>
+        </div>
+      </Container>
+    </section>
+  </main>
+  <script>
+    import { initLandingAnalytics } from "../lib/analytics";
+
+    initLandingAnalytics({
+      landingVariant: "landing_capacitacion",
+      scrollDepths: [50, 75],
+    });
+  </script>
+  <Footer />
+  <StickyWhatsApp />
+</BaseLayout>
+
+<style>
+  .capacitacion-page {
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--tint) 90%, #fff) 0%, #fff 68%),
+      #fff;
+  }
+
+  .training-hero {
+    position: relative;
+    min-height: min(760px, calc(100vh - 98px));
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: clamp(64px, 9vw, 116px) 0;
+  }
+
+  .training-hero__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url("/images/hero-model.png");
+    background-size: cover;
+    background-position: center top;
+    z-index: 0;
+  }
+
+  .training-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(255, 248, 235, 0.96) 0%, rgba(255, 248, 235, 0.84) 46%, rgba(255, 248, 235, 0.38) 74%, transparent 100%),
+      linear-gradient(180deg, transparent 72%, rgba(255, 255, 255, 0.94) 100%);
+    z-index: 1;
+  }
+
+  .training-hero :global(.container) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .training-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 660px) minmax(230px, 330px);
+    gap: clamp(24px, 5vw, 72px);
+    align-items: end;
+  }
+
+  .training-hero__copy h1 {
+    max-width: 13ch;
+    margin-top: 16px;
+    margin-bottom: 20px;
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-size: clamp(2.7rem, 5vw, 4.65rem);
+    font-weight: 600;
+    line-height: 0.96;
+  }
+
+  .training-lead {
+    max-width: 610px;
+    margin-bottom: 26px;
+    font-size: clamp(1.05rem, 1.8vw, 1.22rem);
+  }
+
+  .training-panel {
+    display: grid;
+    gap: 12px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.74);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .training-panel span {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid color-mix(in srgb, var(--brand-gold) 22%, transparent);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.76);
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .intro-section,
+  .benefits-section {
+    background: #fff;
+  }
+
+  .split-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(24px, 5vw, 56px);
+    align-items: start;
+  }
+
+  .check-list,
+  .learning-grid,
+  .process-grid,
+  .benefit-grid,
+  .faq-grid {
+    display: grid;
+    gap: 14px;
+  }
+
+  .check-card,
+  .learning-card,
+  .process-card,
+  .benefit-card,
+  .faq-card,
+  .final-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .check-card {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: 12px;
+    align-items: center;
+    min-height: 70px;
+    padding: 16px 18px;
+  }
+
+  .check-card span,
+  .benefit-card span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--brand-gold);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--brand-gold) 12%, transparent);
+  }
+
+  .check-card p {
+    margin: 0;
+  }
+
+  .learning-section,
+  .process-section,
+  .faq-section,
+  .final-section {
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--tint-2) 82%, #fff) 0%, #fff 100%);
+  }
+
+  .section-head--center {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+  }
+
+  .learning-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .learning-card {
+    min-height: 138px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .learning-card__number,
+  .process-card span {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--brand-gold) 14%, #fff);
+    border: 1px solid color-mix(in srgb, var(--brand-gold) 34%, transparent);
+    color: var(--brand-gold-soft);
+    font-weight: 800;
+  }
+
+  .learning-card h3,
+  .process-card h3,
+  .benefit-card h3,
+  .faq-card h3 {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+
+  .process-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .process-card {
+    min-height: 154px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .section-cta {
+    margin-top: 24px;
+  }
+
+  .benefit-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .benefit-card {
+    min-height: 108px;
+    padding: 18px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .benefit-card span {
+    flex: 0 0 auto;
+  }
+
+  .faq-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .faq-card {
+    overflow: hidden;
+  }
+
+  .faq-card summary {
+    list-style: none;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 12px;
+    align-items: center;
+    min-height: 72px;
+    padding: 16px 18px;
+  }
+
+  .faq-card summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--brand-gold) 14%, transparent);
+    color: var(--brand-gold-soft);
+    font-weight: 900;
+    line-height: 1;
+    transition: transform 160ms ease;
+  }
+
+  .faq-card p {
+    margin: 0;
+    padding: 0 18px 18px 54px;
+  }
+
+  .faq-card[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-card summary:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--brand-gold) 42%, transparent);
+    outline-offset: -3px;
+  }
+
+  .final-section {
+    padding-bottom: 96px;
+  }
+
+  .final-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: clamp(22px, 4vw, 34px);
+    background:
+      linear-gradient(120deg, color-mix(in srgb, var(--primary) 48%, #fff), color-mix(in srgb, var(--whatsapp) 14%, #fff));
+  }
+
+  .final-card h2 {
+    max-width: 650px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 1080px) {
+    .process-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 920px) {
+    .training-hero {
+      min-height: auto;
+      padding: clamp(48px, 10vw, 78px) 0;
+    }
+
+    .training-hero__bg {
+      background-position: 64% top;
+    }
+
+    .training-hero__overlay {
+      background:
+        linear-gradient(180deg, rgba(255, 248, 235, 0.88) 0%, rgba(255, 248, 235, 0.7) 62%, rgba(255, 255, 255, 0.94) 100%);
+    }
+
+    .training-hero__grid,
+    .split-layout,
+    .final-card {
+      grid-template-columns: 1fr;
+    }
+
+    .training-panel {
+      max-width: 540px;
+    }
+
+    .learning-grid,
+    .benefit-grid,
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .training-hero__copy h1 {
+      max-width: 12ch;
+      font-size: clamp(2.28rem, 12vw, 3.12rem);
+    }
+
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .learning-card,
+    .process-card,
+    .benefit-card {
+      min-height: auto;
+    }
+  }
+</style>
