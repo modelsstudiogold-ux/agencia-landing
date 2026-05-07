@@ -1,0 +1,605 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Footer from "../components/sections/Footer.astro";
+import Button from "../components/ui/Button.astro";
+import Container from "../components/ui/Container.astro";
+import StickyWhatsApp from "../components/ui/StickyWhatsApp.astro";
+import { buildSeo } from "../lib/seo";
+import { AGENCY_NAME, SOCIAL_LINKS, WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from "../lib/constants";
+
+const LANDING_VARIANT = "landing_confianza";
+const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(
+  WHATSAPP_MESSAGE,
+)}`;
+
+const seo = buildSeo({
+  title: "Gold Models Studio | Trabaja con acompa\u00f1amiento profesional",
+  description:
+    "Conoce una oportunidad flexible con capacitaci\u00f3n, orientaci\u00f3n y acompa\u00f1amiento profesional en Gold Models Studio. Resuelve tus dudas por WhatsApp.",
+  url: Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined,
+});
+
+const originUrl = Astro.site?.origin ?? "https://goldmodelsstudio.com";
+const siteUrl = seo.url ?? `${originUrl}/trabaja-como-modelo-webcam`;
+
+const trustItems = [
+  {
+    title: "Acompa\u00f1amiento personalizado",
+    text: "Te orientamos con informaci\u00f3n clara para que entiendas cada etapa antes de avanzar.",
+  },
+  {
+    title: "Capacitaci\u00f3n inicial",
+    text: "Recibes una introducci\u00f3n al proceso, buenas pr\u00e1cticas y expectativas reales desde el inicio.",
+  },
+  {
+    title: "Ambiente privado",
+    text: "Cuidamos la discreci\u00f3n, el trato profesional y el manejo responsable de tu informaci\u00f3n.",
+  },
+  {
+    title: "Comunicaci\u00f3n clara",
+    text: "Resolvemos tus dudas por canales oficiales y evitamos promesas poco realistas.",
+  },
+  {
+    title: "Soporte durante el proceso",
+    text: "Tienes acompa\u00f1amiento humano para tomar decisiones con tranquilidad.",
+  },
+];
+
+const processSteps = [
+  "Nos escribes por WhatsApp",
+  "Resolvemos tus dudas",
+  "Te explicamos el proceso",
+  "Recibes orientaci\u00f3n inicial",
+  "Decides si quieres continuar",
+];
+
+const benefits = [
+  "Horarios flexibles",
+  "Capacitaci\u00f3n",
+  "Acompa\u00f1amiento",
+  "Orientaci\u00f3n personalizada",
+  "Ambiente profesional",
+  "Crecimiento seg\u00fan dedicaci\u00f3n y desempe\u00f1o",
+];
+
+const faqItems = [
+  {
+    question: "\u00bfNecesito experiencia previa?",
+    answer:
+      "No. Puedes escribirnos para conocer el proceso y recibir orientaci\u00f3n inicial antes de tomar una decisi\u00f3n.",
+  },
+  {
+    question: "\u00bfMe capacitan?",
+    answer:
+      "S\u00ed. Te explicamos las bases del proceso, las buenas pr\u00e1cticas y la forma de trabajar de manera profesional.",
+  },
+  {
+    question: "\u00bfPuedo resolver dudas antes de iniciar?",
+    answer:
+      "S\u00ed. El primer paso es conversar por WhatsApp para responder tus preguntas con claridad.",
+  },
+  {
+    question: "\u00bfMi informaci\u00f3n es privada?",
+    answer:
+      "Tratamos tu informaci\u00f3n con discreci\u00f3n y solo usamos los datos necesarios para orientarte sobre el proceso.",
+  },
+  {
+    question: "\u00bfC\u00f3mo funciona el proceso?",
+    answer:
+      "Nos escribes, resolvemos tus dudas, te explicamos los pasos y recibes orientaci\u00f3n inicial para decidir si quieres continuar.",
+  },
+  {
+    question: "\u00bfPuedo hablar con alguien antes de tomar una decisi\u00f3n?",
+    answer:
+      "S\u00ed. Puedes hablar con un asesor por WhatsApp y avanzar solo cuando tengas claridad.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: AGENCY_NAME,
+      url: siteUrl,
+      logo: `${originUrl}/images/icons/gold-models-dorado.png`,
+      sameAs: [SOCIAL_LINKS.instagram, SOCIAL_LINKS.tiktok],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: WHATSAPP_NUMBER,
+        contactType: "customer service",
+        areaServed: "CO",
+        availableLanguage: "es",
+      },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faqItems.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+  ],
+};
+---
+
+<BaseLayout {...seo} schema={schema}>
+  <main class="page confianza-page" id="contenido" data-landing-variant={LANDING_VARIANT}>
+    <section class="confianza-hero" aria-labelledby="confianza-title">
+      <div class="confianza-hero__bg" aria-hidden="true"></div>
+      <div class="confianza-hero__overlay" aria-hidden="true"></div>
+
+      <Container>
+        <div class="confianza-hero__grid">
+          <div class="confianza-hero__copy">
+            <span class="eyebrow">Gold Models Studio</span>
+            <h1 id="confianza-title">Trabaja con un estudio profesional que te acompa&ntilde;a desde el primer d&iacute;a</h1>
+            <p class="confianza-lead">
+              Recibe orientaci&oacute;n, capacitaci&oacute;n y acompa&ntilde;amiento en un ambiente serio, privado y profesional.
+            </p>
+            <div class="cta-row">
+              <Button
+                size="lg"
+                variant="whatsapp"
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener"
+                data-event="click_whatsapp"
+                data-landing-variant={LANDING_VARIANT}
+                data-cta-location="hero"
+                data-cta-text="Hablar con un asesor"
+                data-whatsapp-type="main_cta"
+              >
+                Hablar con un asesor
+              </Button>
+            </div>
+          </div>
+
+          <aside class="trust-panel" aria-label="Pilares de acompa&ntilde;amiento">
+            <span>Capacitaci&oacute;n</span>
+            <span>Acompa&ntilde;amiento</span>
+            <span>Privacidad</span>
+          </aside>
+        </div>
+      </Container>
+    </section>
+
+    <section class="section confianza-section" aria-labelledby="confianza-heading">
+      <Container>
+        <header class="section-head">
+          <span class="eyebrow">Confianza</span>
+          <h2 id="confianza-heading">Una opci&oacute;n seria para iniciar con claridad</h2>
+          <p class="muted">
+            Nuestro enfoque combina informaci&oacute;n transparente, privacidad y acompa&ntilde;amiento profesional para que tomes una decisi&oacute;n informada.
+          </p>
+        </header>
+
+        <div class="trust-grid">
+          {trustItems.map((item) => (
+            <article class="trust-card">
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="section process-section" aria-labelledby="process-heading">
+      <Container>
+        <header class="section-head">
+          <span class="eyebrow">C&oacute;mo te acompa&ntilde;amos</span>
+          <h2 id="process-heading">Pasos simples, sin presi&oacute;n</h2>
+        </header>
+
+        <div class="process-list">
+          {processSteps.map((step, index) => (
+            <article class="process-step">
+              <span class="process-step__number">{index + 1}</span>
+              <h3>{step}</h3>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="section benefits-section" id="beneficios" aria-labelledby="benefits-heading">
+      <Container>
+        <header class="section-head section-head--center">
+          <span class="eyebrow">Beneficios</span>
+          <h2 id="benefits-heading">Lo que encuentras en Gold Models Studio</h2>
+          <p class="muted">
+            Una oportunidad flexible con crecimiento ligado a tu dedicaci&oacute;n, desempe&ntilde;o y proceso de aprendizaje.
+          </p>
+        </header>
+
+        <div class="benefit-grid">
+          {benefits.map((benefit) => (
+            <article class="benefit-card">
+              <span aria-hidden="true"></span>
+              <h3>{benefit}</h3>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="section faq-section" id="faq" aria-labelledby="faq-heading">
+      <Container>
+        <header class="section-head section-head--center">
+          <span class="eyebrow">Preguntas frecuentes</span>
+          <h2 id="faq-heading">Resuelve tus dudas antes de avanzar</h2>
+        </header>
+
+        <div class="faq-grid">
+          {faqItems.map((item) => (
+            <details
+              class="faq-card"
+              data-event="click_faq"
+              data-landing-variant={LANDING_VARIANT}
+              data-faq-question={item.question}
+            >
+              <summary>
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <h3>{item.question}</h3>
+              </summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="section final-section" aria-labelledby="final-heading">
+      <Container>
+        <div class="final-card">
+          <div>
+            <span class="eyebrow">Siguiente paso</span>
+            <h2 id="final-heading">Da el primer paso con acompa&ntilde;amiento profesional</h2>
+            <p class="muted">Habla con un asesor y resuelve tus dudas por el canal oficial de WhatsApp.</p>
+          </div>
+          <Button
+            size="lg"
+            variant="whatsapp"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener"
+            data-event="click_whatsapp"
+            data-landing-variant={LANDING_VARIANT}
+            data-cta-location="final_cta"
+            data-cta-text="Hablar por WhatsApp"
+            data-whatsapp-type="footer_cta"
+          >
+            Hablar por WhatsApp
+          </Button>
+        </div>
+      </Container>
+    </section>
+  </main>
+  <Footer />
+  <StickyWhatsApp />
+</BaseLayout>
+
+<style>
+  .confianza-page {
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--tint) 92%, #fff) 0%, #fff 64%),
+      #fff;
+  }
+
+  .confianza-hero {
+    position: relative;
+    min-height: min(760px, calc(100vh - 98px));
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: clamp(64px, 9vw, 118px) 0;
+  }
+
+  .confianza-hero__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url("/images/hero-model.png");
+    background-size: cover;
+    background-position: center top;
+    z-index: 0;
+  }
+
+  .confianza-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(255, 248, 235, 0.95) 0%, rgba(255, 248, 235, 0.82) 44%, rgba(255, 248, 235, 0.36) 74%, transparent 100%),
+      linear-gradient(180deg, transparent 74%, rgba(255, 255, 255, 0.92) 100%);
+    z-index: 1;
+  }
+
+  .confianza-hero :global(.container) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .confianza-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 640px) minmax(220px, 320px);
+    gap: clamp(24px, 5vw, 72px);
+    align-items: end;
+  }
+
+  .confianza-hero__copy h1 {
+    max-width: 13ch;
+    margin-top: 16px;
+    margin-bottom: 20px;
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-size: clamp(2.75rem, 5vw, 4.75rem);
+    font-weight: 600;
+    line-height: 0.96;
+  }
+
+  .confianza-lead {
+    max-width: 560px;
+    margin-bottom: 26px;
+    font-size: clamp(1.05rem, 1.8vw, 1.24rem);
+  }
+
+  .trust-panel {
+    display: grid;
+    gap: 12px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .trust-panel span {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid color-mix(in srgb, var(--brand-gold) 22%, transparent);
+    border-radius: 12px;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.72);
+    font-weight: 700;
+  }
+
+  .confianza-section,
+  .benefits-section {
+    background: #fff;
+  }
+
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .trust-card,
+  .benefit-card,
+  .process-step,
+  .faq-card,
+  .final-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .trust-card {
+    padding: 18px;
+  }
+
+  .trust-card h3,
+  .benefit-card h3,
+  .process-step h3,
+  .faq-card h3 {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+
+  .trust-card p {
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+  }
+
+  .process-section,
+  .faq-section,
+  .final-section {
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--tint-2) 78%, #fff) 0%, #fff 100%);
+  }
+
+  .process-list {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .process-step {
+    min-height: 154px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .process-step__number {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--brand-gold) 14%, #fff);
+    border: 1px solid color-mix(in srgb, var(--brand-gold) 34%, transparent);
+    color: var(--brand-gold-soft);
+    font-weight: 800;
+  }
+
+  .section-head--center {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+  }
+
+  .benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .benefit-card {
+    min-height: 112px;
+    padding: 18px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .benefit-card span {
+    width: 12px;
+    height: 12px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--brand-gold);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--brand-gold) 12%, transparent);
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    align-items: start;
+  }
+
+  .faq-card {
+    overflow: hidden;
+  }
+
+  .faq-card summary {
+    list-style: none;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 12px;
+    align-items: center;
+    min-height: 72px;
+    padding: 16px 18px;
+  }
+
+  .faq-card summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--brand-gold) 14%, transparent);
+    color: var(--brand-gold-soft);
+    font-weight: 900;
+    line-height: 1;
+    transition: transform 160ms ease;
+  }
+
+  .faq-card p {
+    margin: 0;
+    padding: 0 18px 18px 54px;
+  }
+
+  .faq-card[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-card summary:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--brand-gold) 42%, transparent);
+    outline-offset: -3px;
+  }
+
+  .final-section {
+    padding-bottom: 96px;
+  }
+
+  .final-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: clamp(22px, 4vw, 34px);
+    background:
+      linear-gradient(120deg, color-mix(in srgb, var(--primary) 48%, #fff), color-mix(in srgb, var(--whatsapp) 14%, #fff));
+  }
+
+  .final-card h2 {
+    max-width: 680px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 1080px) {
+    .trust-grid,
+    .process-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 840px) {
+    .confianza-hero {
+      min-height: auto;
+      padding: clamp(48px, 10vw, 78px) 0;
+    }
+
+    .confianza-hero__bg {
+      background-position: 64% top;
+    }
+
+    .confianza-hero__overlay {
+      background:
+        linear-gradient(180deg, rgba(255, 248, 235, 0.86) 0%, rgba(255, 248, 235, 0.68) 62%, rgba(255, 255, 255, 0.94) 100%);
+    }
+
+    .confianza-hero__grid,
+    .final-card {
+      grid-template-columns: 1fr;
+    }
+
+    .trust-panel {
+      max-width: 520px;
+    }
+
+    .benefit-grid,
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .confianza-hero__copy h1 {
+      max-width: 12ch;
+      font-size: clamp(2.35rem, 13vw, 3.2rem);
+    }
+
+    .trust-grid,
+    .process-list {
+      grid-template-columns: 1fr;
+    }
+
+    .process-step {
+      min-height: auto;
+    }
+
+    .benefit-card {
+      min-height: 88px;
+    }
+  }
+</style>
