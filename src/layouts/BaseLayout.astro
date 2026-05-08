@@ -44,6 +44,16 @@ const landingVariant = (Astro.props as LayoutProps).landingVariant ?? 'landing_a
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
+    <script is:inline>
+      (function () {
+        var currentPath = window.location.pathname;
+        var normalizedPath = currentPath.replace(/\/{2,}/g, '/');
+
+        if (normalizedPath !== currentPath) {
+          window.history.replaceState(null, '', normalizedPath + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
     {gtmContainerId && (
       <script is:inline define:vars={{ gtmContainerId }}>
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -104,9 +114,18 @@ const landingVariant = (Astro.props as LayoutProps).landingVariant ?? 'landing_a
           return variant || 'landing_actual';
         };
 
+        const normalizePathname = (pathname: string) => {
+          const collapsed = pathname.replace(/\/{2,}/g, '/');
+          if (!collapsed.startsWith('/')) {
+            return `/${collapsed}`;
+          }
+
+          return collapsed;
+        };
+
         const getBaseParams = () => ({
           landing_variant: getLandingVariant(),
-          page_path: window.location.pathname,
+          page_path: normalizePathname(window.location.pathname),
           page_title: document.title,
         });
 
