@@ -127,8 +127,8 @@ const schema = {
 };
 ---
 
-<BaseLayout {...seo} schema={schema}>
-  <main class="page confianza-page" id="contenido" data-landing-variant={LANDING_VARIANT}>
+<BaseLayout {...seo} schema={schema} landingVariant={LANDING_VARIANT}>
+  <main class="page confianza-page" id="contenido">
     <section class="confianza-hero" aria-labelledby="confianza-title">
       <div class="confianza-hero__bg" aria-hidden="true"></div>
       <div class="confianza-hero__overlay" aria-hidden="true"></div>
@@ -148,11 +148,11 @@ const schema = {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener"
-                data-event="click_whatsapp"
-                data-landing-variant={LANDING_VARIANT}
-                data-cta-location="hero"
-                data-cta-text="Hablar con un asesor"
-                data-whatsapp-type="main_cta"
+                data-analytics-event="click_primary_cta"
+                data-analytics-cta-location="hero"
+                data-analytics-cta-type="whatsapp"
+                data-analytics-cta-text="Hablar con un asesor"
+                data-analytics-whatsapp-type="hero_main_cta"
               >
                 Hablar con un asesor
               </Button>
@@ -236,12 +236,11 @@ const schema = {
         </header>
 
         <div class="faq-grid">
-          {faqItems.map((item) => (
+          {faqItems.map((item, index) => (
             <details
               class="faq-card"
-              data-event="click_faq"
-              data-landing-variant={LANDING_VARIANT}
-              data-faq-question={item.question}
+              data-analytics-faq-id={`faq_${index + 1}`}
+              data-analytics-faq-question={item.question}
             >
               <summary>
                 <span class="faq-icon" aria-hidden="true">+</span>
@@ -268,11 +267,9 @@ const schema = {
             href={whatsappUrl}
             target="_blank"
             rel="noopener"
-            data-event="click_whatsapp"
-            data-landing-variant={LANDING_VARIANT}
-            data-cta-location="final_cta"
-            data-cta-text="Hablar por WhatsApp"
-            data-whatsapp-type="footer_cta"
+            data-analytics-cta-location="footer"
+            data-analytics-cta-text="Hablar por WhatsApp"
+            data-analytics-whatsapp-type="footer_cta"
           >
             Hablar por WhatsApp
           </Button>
@@ -280,69 +277,6 @@ const schema = {
       </Container>
     </section>
   </main>
-  <script is:inline define:vars={{ LANDING_VARIANT }}>
-    window.dataLayer = window.dataLayer || [];
-
-    const pushLandingEvent = (eventName, params = {}) => {
-      window.dataLayer.push({
-        event: eventName,
-        landing_variant: LANDING_VARIANT,
-        page_path: window.location.pathname,
-        ...params,
-      });
-    };
-
-    pushLandingEvent("page_view_landing", {
-      page_title: document.title,
-    });
-
-    document.querySelectorAll("[data-event='click_whatsapp']").forEach((element) => {
-      element.addEventListener("click", () => {
-        const ctaLocation = element.getAttribute("data-cta-location") || "";
-        const eventParams = {
-          cta_location: ctaLocation,
-          cta_text: element.getAttribute("data-cta-text") || element.textContent?.trim() || "",
-          whatsapp_type: element.getAttribute("data-whatsapp-type") || "",
-        };
-
-        pushLandingEvent("click_whatsapp", eventParams);
-
-        if (ctaLocation === "hero") {
-          pushLandingEvent("click_cta_principal", eventParams);
-        }
-      });
-    });
-
-    document.querySelectorAll("[data-event='click_faq'] summary").forEach((summary) => {
-      summary.addEventListener("click", () => {
-        const faq = summary.closest("[data-event='click_faq']");
-
-        pushLandingEvent("click_faq", {
-          faq_question: faq?.getAttribute("data-faq-question") || "",
-        });
-      });
-    });
-
-    const scrollDepthMarks = [25, 50, 75, 100];
-    const reachedDepths = new Set();
-
-    const trackScrollDepth = () => {
-      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const depth = scrollableHeight <= 0 ? 100 : Math.round((window.scrollY / scrollableHeight) * 100);
-
-      scrollDepthMarks.forEach((mark) => {
-        if (depth >= mark && !reachedDepths.has(mark)) {
-          reachedDepths.add(mark);
-          pushLandingEvent("scroll_depth", {
-            scroll_depth: mark,
-          });
-        }
-      });
-    };
-
-    window.addEventListener("scroll", trackScrollDepth, { passive: true });
-    window.addEventListener("load", trackScrollDepth);
-  </script>
   <Footer />
   <StickyWhatsApp />
 </BaseLayout>

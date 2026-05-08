@@ -127,8 +127,8 @@ const schema = {
 };
 ---
 
-<BaseLayout {...seo} schema={schema}>
-  <main class="page capacitacion-page" id="contenido" data-landing-variant={LANDING_VARIANT}>
+<BaseLayout {...seo} schema={schema} landingVariant={LANDING_VARIANT}>
+  <main class="page capacitacion-page" id="contenido">
     <section class="training-hero" aria-labelledby="training-title">
       <div class="training-hero__bg" aria-hidden="true"></div>
       <div class="training-hero__overlay" aria-hidden="true"></div>
@@ -148,11 +148,11 @@ const schema = {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener"
-                data-event="click_whatsapp"
-                data-landing-variant={LANDING_VARIANT}
-                data-cta-location="hero"
-                data-cta-text="Recibir orientaci&oacute;n"
-                data-whatsapp-type="main_cta"
+                data-analytics-event="click_primary_cta"
+                data-analytics-cta-location="hero"
+                data-analytics-cta-type="whatsapp"
+                data-analytics-cta-text="Recibir orientaci&oacute;n"
+                data-analytics-whatsapp-type="hero_main_cta"
               >
                 Recibir orientaci&oacute;n
               </Button>
@@ -235,11 +235,9 @@ const schema = {
             href={whatsappUrl}
             target="_blank"
             rel="noopener"
-            data-event="click_whatsapp"
-            data-landing-variant={LANDING_VARIANT}
-            data-cta-location="process"
-            data-cta-text="Resolver mis dudas"
-            data-whatsapp-type="process_cta"
+            data-analytics-cta-location="section"
+            data-analytics-cta-text="Resolver mis dudas"
+            data-analytics-whatsapp-type="main_cta"
           >
             Resolver mis dudas
           </Button>
@@ -276,12 +274,11 @@ const schema = {
         </header>
 
         <div class="faq-grid">
-          {faqItems.map((item) => (
+          {faqItems.map((item, index) => (
             <details
               class="faq-card"
-              data-event="click_faq"
-              data-landing-variant={LANDING_VARIANT}
-              data-faq-question={item.question}
+              data-analytics-faq-id={`faq_${index + 1}`}
+              data-analytics-faq-question={item.question}
             >
               <summary>
                 <span class="faq-icon" aria-hidden="true">+</span>
@@ -308,11 +305,9 @@ const schema = {
             href={whatsappUrl}
             target="_blank"
             rel="noopener"
-            data-event="click_whatsapp"
-            data-landing-variant={LANDING_VARIANT}
-            data-cta-location="final_cta"
-            data-cta-text="Hablar por WhatsApp"
-            data-whatsapp-type="footer_cta"
+            data-analytics-cta-location="footer"
+            data-analytics-cta-text="Hablar por WhatsApp"
+            data-analytics-whatsapp-type="footer_cta"
           >
             Hablar por WhatsApp
           </Button>
@@ -320,14 +315,6 @@ const schema = {
       </Container>
     </section>
   </main>
-  <script>
-    import { initLandingAnalytics } from "../lib/analytics";
-
-    initLandingAnalytics({
-      landingVariant: "landing_capacitacion",
-      scrollDepths: [50, 75],
-    });
-  </script>
   <Footer />
   <StickyWhatsApp />
 </BaseLayout>
