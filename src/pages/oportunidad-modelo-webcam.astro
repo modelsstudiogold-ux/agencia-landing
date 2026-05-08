@@ -1,0 +1,680 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Footer from "../components/sections/Footer.astro";
+import Button from "../components/ui/Button.astro";
+import Container from "../components/ui/Container.astro";
+import StickyWhatsApp from "../components/ui/StickyWhatsApp.astro";
+import { buildSeo } from "../lib/seo";
+import { AGENCY_NAME, SOCIAL_LINKS, WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from "../lib/constants";
+
+const LANDING_VARIANT = "landing_ingresos";
+const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(
+  WHATSAPP_MESSAGE,
+)}`;
+
+const seo = buildSeo({
+  title: "Gold Models Studio | Oportunidad flexible con acompa\u00f1amiento",
+  description:
+    "Conoce una oportunidad flexible con orientaci\u00f3n, capacitaci\u00f3n y acompa\u00f1amiento profesional en Gold Models Studio. Resuelve tus dudas por WhatsApp.",
+  url: Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined,
+});
+
+const originUrl = Astro.site?.origin ?? "https://goldmodelsstudio.com";
+const siteUrl = seo.url ?? `${originUrl}/oportunidad-modelo-webcam`;
+
+const opportunityItems = [
+  "Alternativa para personas que buscan flexibilidad.",
+  "Orientaci\u00f3n inicial para entender el proceso.",
+  "Crecimiento seg\u00fan dedicaci\u00f3n, constancia y desempe\u00f1o.",
+  "Acompa\u00f1amiento del equipo durante el proceso.",
+  "Puedes resolver tus dudas antes de tomar una decisi\u00f3n.",
+];
+
+const studioBenefits = [
+  "Acompa\u00f1amiento profesional.",
+  "Capacitaci\u00f3n inicial.",
+  "Espacios adecuados.",
+  "Orientaci\u00f3n personalizada.",
+  "Comunicaci\u00f3n clara.",
+  "Proceso guiado.",
+  "Menos incertidumbre para iniciar.",
+];
+
+const transparencyItems = [
+  "Los ingresos pueden variar.",
+  "No se garantizan resultados espec\u00edficos.",
+  "El crecimiento depende de dedicaci\u00f3n, horarios, constancia y desempe\u00f1o.",
+  "El estudio acompa\u00f1a y orienta, pero no promete ingresos fijos.",
+];
+
+const processSteps = [
+  "Escr\u00edbenos por WhatsApp.",
+  "Recibe informaci\u00f3n clara.",
+  "Resuelve tus dudas.",
+  "Conoce requisitos y condiciones.",
+  "Decide si quieres continuar.",
+];
+
+const faqItems = [
+  {
+    question: "\u00bfLos ingresos son garantizados?",
+    answer:
+      "No. Los ingresos son variables y dependen de factores como dedicaci\u00f3n, horarios, constancia y desempe\u00f1o. No prometemos resultados fijos.",
+  },
+  {
+    question: "\u00bfPuedo manejar mis horarios?",
+    answer:
+      "S\u00ed. La oportunidad permite flexibilidad, y durante la orientaci\u00f3n te explicamos c\u00f3mo organizar disponibilidad y expectativas.",
+  },
+  {
+    question: "\u00bfNecesito experiencia previa?",
+    answer:
+      "No necesariamente. Puedes recibir capacitaci\u00f3n inicial y acompa\u00f1amiento para entender el proceso antes de avanzar.",
+  },
+  {
+    question: "\u00bfMe explican c\u00f3mo funciona?",
+    answer:
+      "S\u00ed. Te damos informaci\u00f3n clara sobre requisitos, condiciones, acompa\u00f1amiento y pasos generales.",
+  },
+  {
+    question: "\u00bfPuedo resolver dudas antes de tomar una decisi\u00f3n?",
+    answer:
+      "S\u00ed. Puedes hablar con un asesor por WhatsApp y continuar solo cuando tengas claridad.",
+  },
+  {
+    question: "\u00bfQu\u00e9 tipo de acompa\u00f1amiento ofrecen?",
+    answer:
+      "Ofrecemos orientaci\u00f3n inicial, capacitaci\u00f3n, comunicaci\u00f3n clara y soporte durante tus primeros pasos.",
+  },
+  {
+    question: "\u00bfMi informaci\u00f3n es privada?",
+    answer:
+      "Tratamos tu informaci\u00f3n con discreci\u00f3n y solo usamos los datos necesarios para orientarte sobre el proceso.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: AGENCY_NAME,
+      url: siteUrl,
+      logo: `${originUrl}/images/icons/gold-models-dorado.png`,
+      sameAs: [SOCIAL_LINKS.instagram, SOCIAL_LINKS.tiktok],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: WHATSAPP_NUMBER,
+        contactType: "customer service",
+        areaServed: "CO",
+        availableLanguage: "es",
+      },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faqItems.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+  ],
+};
+---
+
+<BaseLayout {...seo} schema={schema} landingVariant={LANDING_VARIANT}>
+  <main class="page ingresos-page" id="contenido">
+    <section class="income-hero" aria-labelledby="income-title">
+      <div class="income-hero__bg" aria-hidden="true"></div>
+      <div class="income-hero__overlay" aria-hidden="true"></div>
+
+      <Container>
+        <div class="income-hero__grid">
+          <div class="income-hero__copy">
+            <span class="eyebrow">Gold Models Studio</span>
+            <h1 id="income-title">Una oportunidad flexible para generar ingresos con acompa&ntilde;amiento profesional</h1>
+            <p class="income-lead">
+              Conoce una alternativa con horarios flexibles, orientaci&oacute;n personalizada y crecimiento seg&uacute;n tu dedicaci&oacute;n y desempe&ntilde;o.
+            </p>
+            <div class="cta-row">
+              <Button
+                size="lg"
+                variant="whatsapp"
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener"
+                data-analytics-event="click_primary_cta"
+                data-analytics-cta-location="hero"
+                data-analytics-cta-type="whatsapp"
+                data-analytics-cta-text="Conocer la oportunidad"
+                data-analytics-whatsapp-type="hero_main_cta"
+              >
+                Conocer la oportunidad
+              </Button>
+            </div>
+          </div>
+
+          <aside class="income-panel" aria-label="Pilares de la oportunidad">
+            <span>Horarios flexibles</span>
+            <span>Acompa&ntilde;amiento</span>
+            <span>Potencial de ingresos</span>
+          </aside>
+        </div>
+      </Container>
+    </section>
+
+    <section class="section opportunity-section" aria-labelledby="opportunity-heading">
+      <Container>
+        <div class="split-layout">
+          <header class="section-head">
+            <span class="eyebrow">Una oportunidad flexible</span>
+            <h2 id="opportunity-heading">Flexibilidad con orientaci&oacute;n desde el inicio</h2>
+            <p class="muted">
+              Si buscas una alternativa con mayor autonom&iacute;a, te explicamos el proceso con claridad para que decidas con informaci&oacute;n.
+            </p>
+            <div class="section-cta">
+              <Button
+                size="lg"
+                variant="whatsapp"
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener"
+                data-analytics-cta-location="opportunity"
+                data-analytics-cta-text="Quiero m&aacute;s informaci&oacute;n"
+                data-analytics-whatsapp-type="opportunity_cta"
+              >
+                Quiero m&aacute;s informaci&oacute;n
+              </Button>
+            </div>
+          </header>
+
+          <div class="check-list">
+            {opportunityItems.map((item) => (
+              <article class="check-card">
+                <span aria-hidden="true"></span>
+                <p>{item}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <section class="section benefits-section" id="beneficios" aria-labelledby="benefits-heading">
+      <Container>
+        <header class="section-head section-head--center">
+          <span class="eyebrow">Beneficios de trabajar con un estudio</span>
+          <h2 id="benefits-heading">Menos incertidumbre para iniciar</h2>
+          <p class="muted">
+            El acompa&ntilde;amiento profesional ayuda a entender requisitos, condiciones y primeros pasos de forma ordenada.
+          </p>
+        </header>
+
+        <div class="benefit-grid">
+          {studioBenefits.map((benefit) => (
+            <article class="benefit-card">
+              <span aria-hidden="true"></span>
+              <h3>{benefit}</h3>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="section transparency-section" aria-labelledby="transparency-heading">
+      <Container>
+        <div class="transparency-card">
+          <div>
+            <span class="eyebrow">Potencial de ingresos con transparencia</span>
+            <h2 id="transparency-heading">Crecimiento seg&uacute;n dedicaci&oacute;n y desempe&ntilde;o</h2>
+            <p class="muted">
+              Hablamos con claridad: esta es una oportunidad flexible con ingresos variables. El estudio orienta y acompa&ntilde;a, pero no promete ingresos fijos ni resultados espec&iacute;ficos.
+            </p>
+            <div class="section-cta">
+              <Button
+                size="lg"
+                variant="whatsapp"
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener"
+                data-analytics-cta-location="transparency"
+                data-analytics-cta-text="Resolver mis dudas"
+                data-analytics-whatsapp-type="transparency_cta"
+              >
+                Resolver mis dudas
+              </Button>
+            </div>
+          </div>
+
+          <div class="transparency-list">
+            {transparencyItems.map((item) => (
+              <article>
+                <span aria-hidden="true"></span>
+                <p>{item}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <section class="section process-section" aria-labelledby="process-heading">
+      <Container>
+        <header class="section-head">
+          <span class="eyebrow">C&oacute;mo empezar</span>
+          <h2 id="process-heading">Un proceso claro antes de decidir</h2>
+        </header>
+
+        <div class="process-grid">
+          {processSteps.map((step, index) => (
+            <article class="process-card">
+              <span>{index + 1}</span>
+              <h3>{step}</h3>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="section faq-section" id="faq" aria-labelledby="faq-heading">
+      <Container>
+        <header class="section-head section-head--center">
+          <span class="eyebrow">Preguntas frecuentes</span>
+          <h2 id="faq-heading">Resuelve tus dudas con informaci&oacute;n clara</h2>
+        </header>
+
+        <div class="faq-grid">
+          {faqItems.map((item, index) => (
+            <details
+              class="faq-card"
+              data-analytics-faq-id={`faq_${index + 1}`}
+              data-analytics-faq-question={item.question}
+            >
+              <summary>
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <h3>{item.question}</h3>
+              </summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="section final-section" aria-labelledby="final-heading">
+      <Container>
+        <div class="final-card">
+          <div>
+            <span class="eyebrow">Siguiente paso</span>
+            <h2 id="final-heading">Conoce si esta oportunidad es para ti</h2>
+            <p class="muted">Habla con un asesor por el canal oficial y recibe orientaci&oacute;n sin compromisos.</p>
+          </div>
+          <Button
+            size="lg"
+            variant="whatsapp"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener"
+            data-analytics-cta-location="footer"
+            data-analytics-cta-text="Hablar por WhatsApp"
+            data-analytics-whatsapp-type="footer_cta"
+          >
+            Hablar por WhatsApp
+          </Button>
+        </div>
+      </Container>
+    </section>
+  </main>
+  <Footer />
+  <StickyWhatsApp />
+</BaseLayout>
+
+<style>
+  .ingresos-page {
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--tint) 90%, #fff) 0%, #fff 66%),
+      #fff;
+  }
+
+  .income-hero {
+    position: relative;
+    min-height: min(760px, calc(100vh - 98px));
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: clamp(64px, 9vw, 116px) 0;
+  }
+
+  .income-hero__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url("/images/hero-model.png");
+    background-size: cover;
+    background-position: center top;
+    z-index: 0;
+  }
+
+  .income-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(255, 248, 235, 0.96) 0%, rgba(255, 248, 235, 0.82) 46%, rgba(255, 248, 235, 0.36) 74%, transparent 100%),
+      linear-gradient(180deg, transparent 72%, rgba(255, 255, 255, 0.94) 100%);
+    z-index: 1;
+  }
+
+  .income-hero :global(.container) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .income-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 680px) minmax(230px, 330px);
+    gap: clamp(24px, 5vw, 72px);
+    align-items: end;
+  }
+
+  .income-hero__copy h1 {
+    max-width: 13ch;
+    margin-top: 16px;
+    margin-bottom: 20px;
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-size: clamp(2.65rem, 5vw, 4.6rem);
+    font-weight: 600;
+    line-height: 0.96;
+  }
+
+  .income-lead {
+    max-width: 620px;
+    margin-bottom: 26px;
+    font-size: clamp(1.05rem, 1.8vw, 1.22rem);
+  }
+
+  .income-panel {
+    display: grid;
+    gap: 12px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.74);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .income-panel span {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid color-mix(in srgb, var(--brand-gold) 22%, transparent);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.76);
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .opportunity-section,
+  .benefits-section {
+    background: #fff;
+  }
+
+  .split-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(24px, 5vw, 56px);
+    align-items: start;
+  }
+
+  .section-cta {
+    margin-top: 24px;
+  }
+
+  .check-list,
+  .benefit-grid,
+  .process-grid,
+  .faq-grid,
+  .transparency-list {
+    display: grid;
+    gap: 14px;
+  }
+
+  .check-card,
+  .benefit-card,
+  .process-card,
+  .faq-card,
+  .transparency-card,
+  .final-card,
+  .transparency-list article {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .check-card,
+  .transparency-list article {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: 12px;
+    align-items: center;
+    min-height: 70px;
+    padding: 16px 18px;
+  }
+
+  .check-card span,
+  .benefit-card span,
+  .transparency-list span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--brand-gold);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--brand-gold) 12%, transparent);
+  }
+
+  .check-card p,
+  .transparency-list p {
+    margin: 0;
+  }
+
+  .section-head--center {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+  }
+
+  .benefit-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .benefit-card {
+    min-height: 108px;
+    padding: 18px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .benefit-card span {
+    flex: 0 0 auto;
+  }
+
+  .benefit-card h3,
+  .process-card h3,
+  .faq-card h3 {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+
+  .transparency-section,
+  .process-section,
+  .faq-section,
+  .final-section {
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--tint-2) 82%, #fff) 0%, #fff 100%);
+  }
+
+  .transparency-card {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: clamp(22px, 4vw, 46px);
+    align-items: center;
+    padding: clamp(22px, 4vw, 34px);
+    background:
+      linear-gradient(120deg, color-mix(in srgb, var(--primary) 42%, #fff), rgba(255, 255, 255, 0.9));
+  }
+
+  .process-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .process-card {
+    min-height: 154px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .process-card span {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--brand-gold) 14%, #fff);
+    border: 1px solid color-mix(in srgb, var(--brand-gold) 34%, transparent);
+    color: var(--brand-gold-soft);
+    font-weight: 800;
+  }
+
+  .faq-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .faq-card {
+    overflow: hidden;
+  }
+
+  .faq-card summary {
+    list-style: none;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 12px;
+    align-items: center;
+    min-height: 72px;
+    padding: 16px 18px;
+  }
+
+  .faq-card summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--brand-gold) 14%, transparent);
+    color: var(--brand-gold-soft);
+    font-weight: 900;
+    line-height: 1;
+    transition: transform 160ms ease;
+  }
+
+  .faq-card p {
+    margin: 0;
+    padding: 0 18px 18px 54px;
+  }
+
+  .faq-card[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-card summary:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--brand-gold) 42%, transparent);
+    outline-offset: -3px;
+  }
+
+  .final-section {
+    padding-bottom: 96px;
+  }
+
+  .final-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: clamp(22px, 4vw, 34px);
+    background:
+      linear-gradient(120deg, color-mix(in srgb, var(--primary) 48%, #fff), color-mix(in srgb, var(--whatsapp) 14%, #fff));
+  }
+
+  .final-card h2 {
+    max-width: 650px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 1080px) {
+    .process-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 920px) {
+    .income-hero {
+      min-height: auto;
+      padding: clamp(48px, 10vw, 78px) 0;
+    }
+
+    .income-hero__bg {
+      background-position: 64% top;
+    }
+
+    .income-hero__overlay {
+      background:
+        linear-gradient(180deg, rgba(255, 248, 235, 0.88) 0%, rgba(255, 248, 235, 0.7) 62%, rgba(255, 255, 255, 0.94) 100%);
+    }
+
+    .income-hero__grid,
+    .split-layout,
+    .transparency-card,
+    .final-card {
+      grid-template-columns: 1fr;
+    }
+
+    .income-panel {
+      max-width: 540px;
+    }
+
+    .benefit-grid,
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .income-hero__copy h1 {
+      max-width: 12ch;
+      font-size: clamp(2.22rem, 12vw, 3.08rem);
+    }
+
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .process-card,
+    .benefit-card {
+      min-height: auto;
+    }
+  }
+</style>
