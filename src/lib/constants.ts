@@ -3,7 +3,7 @@ export const BRAND_TAGLINE = "Oportunidades reales para talento mayor de 18";
 
 export const WHATSAPP_NUMBER = "+573102704428";
 export const WHATSAPP_MESSAGE =
-  "Hola, he visto la oportunidad en su pagina web y solicito informacion detallada sobre el proceso de aplicacion.";
+  "Hola, he visto la oportunidad en su p\u00e1gina web y solicito informaci\u00f3n detallada sobre el proceso de aplicaci\u00f3n.";
 
 export const HERO_BENEFITS = [
   "Pagos seguros y transparentes",
