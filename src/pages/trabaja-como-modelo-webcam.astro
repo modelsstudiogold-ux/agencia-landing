@@ -141,7 +141,7 @@ const schema = {
             <p class="confianza-lead">
               Recibe orientaci&oacute;n, capacitaci&oacute;n y privacidad en un proceso claro para tomar una decisi&oacute;n informada.
             </p>
-            <div class="cta-row">
+            <div class="cta-row hero-actions">
               <Button
                 size="lg"
                 variant="whatsapp"
@@ -154,15 +154,16 @@ const schema = {
                 data-analytics-cta-text="Hablar con un asesor"
                 data-analytics-whatsapp-type="hero_main_cta"
               >
-                Hablar con un asesor
+                Habla con una asesora
               </Button>
+              <p class="cta-microcopy">Atenci&oacute;n privada y sin compromiso</p>
             </div>
           </div>
 
           <aside class="trust-panel" aria-label="Pilares de acompa&ntilde;amiento">
-            <span>Capacitaci&oacute;n</span>
-            <span>Acompa&ntilde;amiento</span>
-            <span>Privacidad</span>
+            <span>Orientaci&oacute;n inicial</span>
+            <span>Proceso claro y privado</span>
+            <span>Acompa&ntilde;amiento profesional</span>
           </aside>
         </div>
       </Container>
@@ -343,6 +344,40 @@ const schema = {
     font-size: clamp(1.05rem, 1.8vw, 1.24rem);
   }
 
+  .hero-actions {
+    display: grid;
+    gap: 10px;
+    justify-items: start;
+    align-items: center;
+  }
+
+  .hero-actions :global(.btn-whatsapp) {
+    min-height: 56px;
+    padding-inline: 26px;
+    color: #fff;
+    background: #16a34a;
+    border-color: color-mix(in srgb, #0f7a37 34%, transparent);
+    box-shadow: 0 16px 34px rgba(22, 163, 74, 0.32);
+  }
+
+  .hero-actions :global(.btn-whatsapp:hover) {
+    background: #12813d;
+    box-shadow: 0 18px 38px rgba(18, 129, 61, 0.36);
+  }
+
+  .hero-actions :global(.btn-whatsapp:focus-visible) {
+    outline: 3px solid color-mix(in srgb, #16a34a 46%, #fff);
+    outline-offset: 4px;
+  }
+
+  .cta-microcopy {
+    margin: 0;
+    color: color-mix(in srgb, var(--text) 76%, transparent);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
   .trust-panel {
     display: grid;
     gap: 12px;
@@ -364,6 +399,7 @@ const schema = {
     color: var(--text);
     background: rgba(255, 255, 255, 0.72);
     font-weight: 700;
+    line-height: 1.25;
   }
 
   .confianza-section,
@@ -553,7 +589,7 @@ const schema = {
   @media (max-width: 840px) {
     .confianza-hero {
       min-height: auto;
-      padding: clamp(48px, 10vw, 78px) 0;
+      padding: clamp(34px, 9vw, 64px) 0 clamp(42px, 10vw, 72px);
     }
 
     .confianza-hero__bg {
@@ -572,6 +608,19 @@ const schema = {
 
     .trust-panel {
       max-width: 520px;
+      padding: 14px;
+      gap: 10px;
+    }
+
+    .hero-actions {
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .hero-actions :global(.btn-whatsapp) {
+      width: 100%;
+      min-height: 58px;
+      font-size: 1.02rem;
     }
 
     .benefit-grid,
@@ -583,7 +632,18 @@ const schema = {
   @media (max-width: 560px) {
     .confianza-hero__copy h1 {
       max-width: 12ch;
-      font-size: clamp(2.35rem, 13vw, 3.2rem);
+      font-size: clamp(2.2rem, 11.5vw, 2.95rem);
+      line-height: 0.98;
+    }
+
+    .confianza-lead {
+      margin-bottom: 20px;
+    }
+
+    .trust-panel span {
+      min-height: 44px;
+      padding: 10px 12px;
+      font-size: 0.95rem;
     }
 
     .trust-grid,
@@ -597,6 +657,16 @@ const schema = {
 
     .benefit-card {
       min-height: 88px;
+    }
+
+    :global(.wpp-wrap) {
+      right: max(8px, env(safe-area-inset-right));
+      bottom: max(10px, env(safe-area-inset-bottom));
+    }
+
+    :global(.wpp__bubble) {
+      width: 48px;
+      height: 48px;
     }
   }
 </style>
