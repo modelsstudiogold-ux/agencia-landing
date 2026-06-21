@@ -11,7 +11,7 @@ import Legal from "../components/sections/Legal.astro";
 import Footer from "../components/sections/Footer.astro";
 import StickyWhatsApp from "../components/ui/StickyWhatsApp.astro";
 import { buildSeo } from "../lib/seo";
-import { AGENCY_NAME, FAQ_ITEMS, SOCIAL_LINKS, WHATSAPP_NUMBER } from "../lib/constants";
+import { AGENCY_NAME, BASE_WHATSAPP_MESSAGE, FAQ_ITEMS, SOCIAL_LINKS, WHATSAPP_NUMBER } from "../lib/constants";
 
 const seo = buildSeo({
   title: "Estudio Webcam en Bogot\u00e1 (Modelia y Normand\u00eda) | Gold Models",
@@ -94,7 +94,13 @@ const schema = {
 };
 ---
 
-<BaseLayout {...seo} schema={schema} landingVariant="landing_actual">
+<BaseLayout
+  {...seo}
+  schema={schema}
+  landingVariant="landing_actual"
+  analyticsLandingType="base"
+  analyticsSource="google_ads_base"
+>
   <main class="page">
     <Hero />
     <Provisions />
@@ -106,5 +112,5 @@ const schema = {
     <Legal />
   </main>
   <Footer />
-  <StickyWhatsApp />
+  <StickyWhatsApp analyticsLandingType="base" analyticsSource="google_ads_base" whatsappMessage={BASE_WHATSAPP_MESSAGE} />
 </BaseLayout>

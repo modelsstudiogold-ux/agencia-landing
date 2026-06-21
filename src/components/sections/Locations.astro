@@ -1,13 +1,17 @@
 ---
 import Container from "../ui/Container.astro";
 import Button from "../ui/Button.astro";
-import { LOCATIONS, WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from "../../lib/constants";
+import { BASE_WHATSAPP_MESSAGE, LOCATIONS, WHATSAPP_NUMBER } from "../../lib/constants";
 
 const baseNumber = WHATSAPP_NUMBER.replace(/\D/g, "");
 const buildWhatsappUrl = (locationName: string) => {
-  const message = `${WHATSAPP_MESSAGE}\n\nMe interesa la sede: ${locationName} (Bogotá).`;
+  const message = `${BASE_WHATSAPP_MESSAGE}\n\nMe interesa la sede: ${locationName} (Bogota).`;
   return `https://wa.me/${baseNumber}?text=${encodeURIComponent(message)}`;
 };
+const buildCtaLocation = (locationName: string) => locationName
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "")
+  .toLowerCase();
 ---
 
 <section class="section" id="sedes">
@@ -30,7 +34,16 @@ const buildWhatsappUrl = (locationName: string) => {
           </div>
           <p>{location.description}</p>
           <div class="cta-row">
-            <Button variant="whatsapp" href={buildWhatsappUrl(location.name)} target="_blank" rel="noopener">
+            <Button
+              variant="whatsapp"
+              href={buildWhatsappUrl(location.name)}
+              target="_blank"
+              rel="noopener"
+              data-analytics-cta-location={buildCtaLocation(location.name)}
+              data-analytics-whatsapp-type="location_cta"
+              data-analytics-landing-type="base"
+              data-analytics-source="google_ads_base"
+            >
               Preguntar por {location.name}
             </Button>
           </div>

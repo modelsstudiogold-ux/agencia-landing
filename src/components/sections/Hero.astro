@@ -1,9 +1,9 @@
 ---
 import Container from "../ui/Container.astro";
 import Button from "../ui/Button.astro";
-import { AGENCY_NAME, BRAND_TAGLINE, WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from "../../lib/constants";
+import { AGENCY_NAME, BASE_WHATSAPP_MESSAGE, BRAND_TAGLINE, WHATSAPP_NUMBER } from "../../lib/constants";
 
-const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(BASE_WHATSAPP_MESSAGE)}`;
 ---
 
 <section class="section hero" id="contenido">
@@ -33,6 +33,8 @@ const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${
           data-analytics-cta-location="hero"
           data-analytics-cta-type="whatsapp"
           data-analytics-whatsapp-type="hero_main_cta"
+          data-analytics-landing-type="base"
+          data-analytics-source="google_ads_base"
         >
           Hablar por WhatsApp
         </Button>

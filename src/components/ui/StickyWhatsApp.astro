@@ -1,8 +1,15 @@
 ---
 import { WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from "../../lib/constants";
 
+type Props = {
+  analyticsLandingType?: string;
+  analyticsSource?: string;
+  whatsappMessage?: string;
+};
+
+const { analyticsLandingType, analyticsSource, whatsappMessage = WHATSAPP_MESSAGE } = Astro.props;
 const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(
-  WHATSAPP_MESSAGE,
+  whatsappMessage,
 )}`;
 ---
 
@@ -13,8 +20,10 @@ const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${
     target="_blank"
     rel="noopener"
     aria-label="Contactar por WhatsApp"
-    data-analytics-cta-location="sticky"
+    data-analytics-cta-location="sticky_whatsapp"
     data-analytics-whatsapp-type="sticky_floating"
+    data-analytics-landing-type={analyticsLandingType}
+    data-analytics-source={analyticsSource}
   >
     <span class="wpp__bubble" aria-hidden="true">
       <svg class="wpp__icon" viewBox="0 0 32 32">

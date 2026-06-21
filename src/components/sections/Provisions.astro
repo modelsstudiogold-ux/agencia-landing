@@ -1,9 +1,9 @@
 ---
 import Container from "../ui/Container.astro";
 import Button from "../ui/Button.astro";
-import { WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from "../../lib/constants";
+import { BASE_WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from "../../lib/constants";
 
-const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(BASE_WHATSAPP_MESSAGE)}`;
 
 const items = [
   {
@@ -94,7 +94,19 @@ const items = [
 
       <div class="cta">
         <p class="quote">“No te preocupes, ¡no necesitas traer nada! ¡Lo tenemos TODO preparado para ti!”</p>
-        <Button variant="whatsapp" size="lg" href={whatsappUrl} target="_blank" rel="noopener">Enviar un WhatsApp</Button>
+        <Button
+          variant="whatsapp"
+          size="lg"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener"
+          data-analytics-cta-location="provisions"
+          data-analytics-whatsapp-type="section_cta"
+          data-analytics-landing-type="base"
+          data-analytics-source="google_ads_base"
+        >
+          Enviar un WhatsApp
+        </Button>
       </div>
     </Container>
   </div>
