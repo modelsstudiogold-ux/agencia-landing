@@ -1,10 +1,10 @@
 ---
 import Container from "../ui/Container.astro";
 import Button from "../ui/Button.astro";
-import { WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from "../../lib/constants";
+import { BASE_WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from "../../lib/constants";
 
 const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(
-  "Hola, me gustaría conocer más sobre los convenios disponibles para modelos activas."
+  `${BASE_WHATSAPP_MESSAGE}\n\nMe gustaria conocer mas sobre los convenios disponibles para modelos activas.`
 )}`;
 
 const convenios = [
@@ -90,7 +90,19 @@ const convenios = [
 
       <div class="cta">
         <p class="quote">"Tu bienestar también es parte de nuestra prioridad"</p>
-        <Button variant="whatsapp" size="lg" href={whatsappUrl} target="_blank" rel="noopener">Pregunta por convenios</Button>
+        <Button
+          variant="whatsapp"
+          size="lg"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener"
+          data-analytics-cta-location="convenios"
+          data-analytics-whatsapp-type="section_cta"
+          data-analytics-landing-type="base"
+          data-analytics-source="google_ads_base"
+        >
+          Pregunta por convenios
+        </Button>
       </div>
     </Container>
   </div>
