@@ -1,0 +1,7 @@
+/acompa%C3%B1amiento-activo /acompanamiento-activo 301
+/acompa%C3%B1amiento-activo/* /acompanamiento-activo/:splat 301
+
+/acompanamiento-activo https://gm-acompanamiento-activo.netlify.app/ 200
+/acompanamiento-activo/* https://gm-acompanamiento-activo.netlify.app/:splat 200
+
+/* /index.html 200
