@@ -100,6 +100,7 @@ export const readUtmParams = (): UtmParams => {
 
 const getElementText = (element: Element) =>
   element.getAttribute("data-cta-text") ||
+  element.getAttribute("data-analytics-cta-text") ||
   element.getAttribute("aria-label") ||
   element.textContent?.replace(/\s+/g, " ").trim() ||
   "";
@@ -109,7 +110,7 @@ const inferWhatsappLocation = (element: Element) => {
     return "floating";
   }
 
-  return element.getAttribute("data-cta-location") || "";
+  return element.getAttribute("data-cta-location") || element.getAttribute("data-analytics-cta-location") || "";
 };
 
 const inferWhatsappType = (element: Element) => {
@@ -117,7 +118,7 @@ const inferWhatsappType = (element: Element) => {
     return "floating_button";
   }
 
-  return element.getAttribute("data-whatsapp-type") || "";
+  return element.getAttribute("data-whatsapp-type") || element.getAttribute("data-analytics-whatsapp-type") || "";
 };
 
 export const initLandingAnalytics = ({ landingVariant, scrollDepths = [50, 75] }: LandingAnalyticsOptions) => {
