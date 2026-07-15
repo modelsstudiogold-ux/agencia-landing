@@ -21,6 +21,7 @@ const seo = buildSeo({
 
 const originUrl = Astro.site?.origin ?? "https://goldmodelsstudio.com";
 const siteUrl = seo.url ?? `${originUrl}/trabaja-como-modelo-webcam`;
+const popupVideoUrl = "/videos/testimonio_3.mp4";
 
 const trustItems = [
   {
@@ -129,6 +130,43 @@ const schema = {
 
 <BaseLayout {...seo} schema={schema} landingVariant={LANDING_VARIANT}>
   <main class="page confianza-page" id="contenido">
+    <section class="video-popup" id="video-popup" role="dialog" aria-modal="true" aria-labelledby="video-popup-title" aria-describedby="video-popup-copy">
+      <div class="video-popup__surface" role="document">
+        <button type="button" class="video-popup__close" id="video-popup-close" aria-label="Cerrar ventana">&times;</button>
+        <p class="eyebrow">Testimonio real</p>
+        <h2 id="video-popup-title">“Llegu&eacute; sin experiencia y aprend&iacute; desde cero.”</h2>
+        <p class="video-popup__copy" id="video-popup-copy">
+          Si llegaste buscando trabajo webcam en bogot&aacute;, aqu&iacute; puedes ver una historia real antes de escribirnos.
+        </p>
+        <video class="video-popup__player" id="video-popup-player" controls preload="metadata" playsinline>
+          <source src={popupVideoUrl} type="video/mp4" />
+          Tu navegador no puede reproducir este video.
+        </video>
+        <div class="video-popup__final" id="video-popup-final">
+          <h3>Escr&iacute;benos y te acompa&ntilde;amos paso a paso</h3>
+          <p>Habla por WhatsApp con una asesora para resolver tus dudas y empezar con claridad.</p>
+          <p class="video-popup__keywords">
+            Si buscaste estudio webcam bogot&aacute;, modelo webcam bogot&aacute; o trabajo webcam bogot&aacute;,
+            aqu&iacute; te orientamos de forma clara y privada.
+          </p>
+        </div>
+        <a
+          class="video-popup__cta"
+          id="video-popup-cta"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener"
+          data-analytics-event="click_popup_whatsapp"
+          data-analytics-cta-location="popup"
+          data-analytics-cta-type="whatsapp"
+          data-analytics-cta-text="Hablar por WhatsApp desde video"
+          data-analytics-whatsapp-type="popup_video_cta"
+        >
+          Hablar por WhatsApp ahora
+        </a>
+      </div>
+    </section>
+
     <section class="confianza-hero" aria-labelledby="confianza-title">
       <div class="confianza-hero__bg" aria-hidden="true"></div>
       <div class="confianza-hero__overlay" aria-hidden="true"></div>
@@ -282,7 +320,251 @@ const schema = {
   <StickyWhatsApp />
 </BaseLayout>
 
+<script is:inline>
+  (() => {
+    const popup = document.getElementById("video-popup");
+    const closeButton = document.getElementById("video-popup-close");
+    const video = document.getElementById("video-popup-player");
+    const cta = document.getElementById("video-popup-cta");
+    const finalState = document.getElementById("video-popup-final");
+
+    if (
+      !(popup instanceof HTMLElement) ||
+      !(closeButton instanceof HTMLButtonElement) ||
+      !(video instanceof HTMLVideoElement) ||
+      !(cta instanceof HTMLAnchorElement) ||
+      !(finalState instanceof HTMLElement)
+    ) {
+      return;
+    }
+
+    const search = new URLSearchParams(window.location.search);
+    const adIdKeys = ["gclid", "gbraid", "wbraid", "fbclid", "msclkid", "ttclid"];
+    const adSignals = [
+      "google",
+      "ads",
+      "cpc",
+      "ppc",
+      "paid",
+      "meta",
+      "facebook",
+      "instagram",
+      "tiktok",
+    ];
+
+    const hasAdId = adIdKeys.some((key) => search.has(key));
+    const utmMedium = (search.get("utm_medium") || "").toLowerCase();
+    const utmSource = (search.get("utm_source") || "").toLowerCase();
+    const utmCampaign = (search.get("utm_campaign") || "").toLowerCase();
+    const combinedUtm = `${utmSource} ${utmMedium} ${utmCampaign}`;
+    const hasAdUtm = adSignals.some((token) => combinedUtm.includes(token));
+    const isAdTraffic = hasAdId || hasAdUtm;
+    const utmTerm = search.get("utm_term") || "";
+
+    const pushPopupEvent = (eventName, extraParams = {}) => {
+      const analyticsWindow = window;
+      analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
+      analyticsWindow.dataLayer.push({
+        event: eventName,
+        landing_variant: "landing_confianza",
+        page_path: window.location.pathname,
+        utm_source: utmSource || undefined,
+        utm_medium: utmMedium || undefined,
+        utm_campaign: utmCampaign || undefined,
+        utm_term: utmTerm || undefined,
+        ...extraParams,
+      });
+    };
+
+    const revealFinalState = () => {
+      if (popup.classList.contains("is-finished")) {
+        return;
+      }
+
+      popup.classList.add("is-finished");
+      video.classList.add("is-hidden");
+      finalState.classList.add("is-visible");
+      cta.classList.add("is-visible");
+    };
+
+    const openPopup = () => {
+      popup.classList.add("is-open");
+      document.body.classList.add("popup-lock-scroll");
+      popup.setAttribute("aria-hidden", "false");
+
+      video.muted = true;
+      const autoplayAttempt = video.play();
+      if (autoplayAttempt && typeof autoplayAttempt.catch === "function") {
+        autoplayAttempt.catch(() => {
+          // Autoplay can fail on some browsers; controls remain available for manual play.
+        });
+      }
+    };
+
+    const closePopup = () => {
+      popup.classList.remove("is-open");
+      document.body.classList.remove("popup-lock-scroll");
+      popup.setAttribute("aria-hidden", "true");
+      video.pause();
+    };
+
+    video.addEventListener("ended", () => {
+      pushPopupEvent("popup_video_complete", {
+        popup_variant: "video_popup_reel",
+      });
+      revealFinalState();
+    });
+
+    video.addEventListener("error", () => {
+      revealFinalState();
+    });
+
+    closeButton.addEventListener("click", () => {
+      closePopup();
+    });
+
+    popup.addEventListener("click", (event) => {
+      if (event.target === popup) {
+        event.preventDefault();
+      }
+    });
+
+    popup.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+      }
+    });
+
+    window.addEventListener("load", () => {
+      if (isAdTraffic) {
+        openPopup();
+        pushPopupEvent("popup_open", {
+          popup_variant: "video_popup_reel",
+          popup_trigger: "ad_traffic",
+        });
+      }
+    });
+  })();
+</script>
+
 <style>
+  .video-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(15, 23, 42, 0.74);
+    backdrop-filter: blur(3px);
+  }
+
+  .video-popup.is-open {
+    display: flex;
+  }
+
+  .video-popup__surface {
+    position: relative;
+    width: min(760px, calc(100vw - 24px));
+    max-height: calc(100vh - 24px);
+    overflow: auto;
+    padding: clamp(18px, 3.4vw, 28px);
+    border-radius: 16px;
+    border: 1px solid color-mix(in srgb, var(--brand-gold) 34%, #ffffff);
+    background: #fff;
+    box-shadow: 0 28px 60px rgba(15, 23, 42, 0.34);
+  }
+
+  .video-popup__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--brand-gold) 18%, #fff);
+    color: var(--text);
+    font-size: 1.35rem;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+
+  .video-popup.is-finished .video-popup__close {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .video-popup__copy {
+    margin-top: 10px;
+    margin-bottom: 14px;
+  }
+
+  .video-popup__player {
+    width: 100%;
+    border-radius: 12px;
+    background: #0f172a;
+    aspect-ratio: 9 / 16;
+    max-height: min(64vh, 660px);
+  }
+
+  .video-popup__player.is-hidden {
+    display: none;
+  }
+
+  .video-popup__final {
+    display: none;
+    margin-top: 8px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--tint) 86%, #fff);
+    border: 1px solid var(--border);
+  }
+
+  .video-popup__final h3 {
+    margin: 0 0 6px;
+  }
+
+  .video-popup__final p {
+    margin: 0;
+  }
+
+  .video-popup__keywords {
+    margin-top: 8px;
+    color: color-mix(in srgb, var(--text) 82%, transparent);
+    font-size: 0.98rem;
+  }
+
+  .video-popup__final.is-visible {
+    display: block;
+  }
+
+  .video-popup__cta {
+    display: none;
+    margin-top: 14px;
+    align-items: center;
+    justify-content: center;
+    min-height: 54px;
+    width: 100%;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 800;
+    background: #16a34a;
+    color: #fff;
+  }
+
+  .video-popup__cta.is-visible {
+    display: inline-flex;
+  }
+
+  :global(body.popup-lock-scroll) {
+    overflow: hidden;
+  }
+
   .confianza-page {
     background:
       linear-gradient(180deg, color-mix(in srgb, var(--tint) 92%, #fff) 0%, #fff 64%),
