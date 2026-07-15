@@ -3,32 +3,22 @@ import Container from "../ui/Container.astro";
 
 const team = [
   {
-    key: "gerencia",
-    title: "Gerencia",
-    role: "Dirección principal",
-    desc: "Define la visión, el estándar de calidad y los lineamientos de acompañamiento para todo el equipo.",
-    image: "/images/GoldModels.jpg",
+    key: "coordinadora",
+    title: "Coordinadora",
+    desc: "Acompaña el proceso inicial, resuelve dudas y guía a cada candidata durante su experiencia en el estudio.",
+    image: "/images/empresarial/coordinadora.jpg",
   },
   {
-    key: "administrativa",
-    title: "Administrativa",
-    role: "Operación y agenda",
-    desc: "Organiza el día a día, coordina entrevistas y asegura una comunicación clara con cada candidata.",
-    image: "/images/GoldModels.jpg",
-  },
-  {
-    key: "contable",
-    title: "Contable",
-    role: "Pagos y soporte",
-    desc: "Gestiona pagos y documentación para que todo el proceso sea transparente y ordenado.",
-    image: "/images/GoldModels.jpg",
+    key: "monitoreo",
+    title: "Monitoreo",
+    desc: "Brinda apoyo operativo y seguimiento para que cada jornada se desarrolle de forma ordenada y segura.",
+    image: "/images/empresarial/monitoreo.jpg",
   },
   {
     key: "marketing",
     title: "Marketing",
-    role: "Promoción y comunicación",
-    desc: "Diseña campañas, gestiona redes y posiciona la marca para atraer talento y oportunidades.",
-    image: "/images/GoldModels.jpg",
+    desc: "Impulsa la imagen del estudio y fortalece la presencia digital de Gold Models.",
+    image: "/images/empresarial/marketing.jpg",
   },
 ] as const;
 ---
@@ -51,6 +41,7 @@ const team = [
           <article
             class={`team-card ${i === 0 ? "active" : ""}`}
             data-index={i}
+            data-desc={member.desc}
             style={`background-image: url('${member.image}')`}
           >
             <div class="card-overlay"></div>
@@ -319,14 +310,6 @@ const team = [
     desc: card.getAttribute('data-desc') || '',
   }));
 
-  // We'll store descriptions as data attributes so JS can read them
-  const descriptions = [
-    "Define la visión, el estándar de calidad y los lineamientos de acompañamiento para todo el equipo.",
-    "Organiza el día a día, coordina entrevistas y asegura una comunicación clara con cada candidata.",
-    "Gestiona pagos y documentación para que todo el proceso sea transparente y ordenado.",
-    "Diseña campañas, gestiona redes y posiciona la marca para atraer talento y oportunidades.",
-  ];
-
   let current = 0;
 
   function update(index) {
@@ -347,8 +330,8 @@ const team = [
     });
 
     // Update info panel
-    if (infoTitle) infoTitle.textContent = cards[current].querySelector('.card-label')?.textContent || '';
-    if (infoDesc) infoDesc.textContent = descriptions[current] || '';
+    if (infoTitle) infoTitle.textContent = teamData[current].title;
+    if (infoDesc) infoDesc.textContent = teamData[current].desc;
 
     // Update dots
     dots.forEach((dot, i) => {
