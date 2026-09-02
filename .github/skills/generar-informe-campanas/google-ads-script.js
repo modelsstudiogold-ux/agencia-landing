@@ -17,7 +17,7 @@
  */
 
 // ⚠️ REEMPLAZAR con la URL de tu Google Sheet
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/TU_SHEET_ID_AQUI/edit';
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1aVNnv1WSLV9F9pivG66gJ8QaO7zi_CTqfbbolaz5eRA/edit';
 
 function main() {
   const sheet = SpreadsheetApp.openByUrl(SHEET_URL);
