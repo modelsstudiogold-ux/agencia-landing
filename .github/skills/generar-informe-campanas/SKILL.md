@@ -15,15 +15,17 @@ Crea un reporte completo de campañas Google Ads con:
 ## Flujo
 
 1. **Solicita fechas**: Pide rango de fechas (ej: 1-31 agosto 2026)
-2. **Extrae GA4**: Ejecuta script Node.js `ga4-timestamps-detalle.js` con API de Google Analytics
-3. **Genera HTML**: Construye tabla interactiva con `build-html-table.js`
-4. **Publica**: Copia informe a `public/informe-[mes]-[año].html` y hace push a GitHub
-5. **Netlify**: Redeploy automático en goldmodelsstudio.com
+2. **Extrae GA4 completo**: clics WhatsApp, embudo popup→clic, geografía, horarios, tabla de verificación (todo vía API, sin datos hardcodeados)
+3. **Extrae Google Ads** (opcional): gasto, CPA, conversiones por campaña, vía Google Sheet alimentado por un Ads Script
+4. **Genera HTML completo**: las 9 secciones se arman dinámicamente con `build-full-report.js`
+5. **Publica**: Copia informe a `public/informe-[mes]-[año].html` y hace push a GitHub
+6. **Netlify**: Redeploy automático en goldmodelsstudio.com
 
 ## Requisitos
 
 - Servicio GA4: `ga4-export/` con scripts y credenciales `service-account.json`
 - Propiedad GA4: 535148793
+- Google Ads (opcional): Sheet + Ads Script (ver README para configuración) para gasto/CPA
 - Repositorio: `agencia-landing` en GitHub
 - Netlify: Conectado a rama `master`
 
