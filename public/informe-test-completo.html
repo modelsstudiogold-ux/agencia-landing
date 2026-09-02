@@ -1,0 +1,2182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Informe de Campañas — Gold Models Studio | Agosto 2026</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 11pt;
+      color: #1a1a1a;
+      background: #fff;
+      padding: 0;
+    }
+
+    .page {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 48px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 3px solid #b77a12;
+      padding-bottom: 20px;
+      margin-bottom: 32px;
+    }
+    .header-brand h1 {
+      font-size: 22pt;
+      font-weight: 700;
+      color: #b77a12;
+      letter-spacing: -0.5px;
+    }
+    .header-brand p {
+      font-size: 10pt;
+      color: #666;
+      margin-top: 4px;
+    }
+    .header-meta {
+      text-align: right;
+    }
+    .header-meta .badge {
+      display: inline-block;
+      background: #b77a12;
+      color: #fff;
+      font-size: 9pt;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 6px;
+    }
+    .header-meta p {
+      font-size: 9pt;
+      color: #888;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-title {
+      font-size: 13pt;
+      font-weight: 700;
+      color: #1a1a1a;
+      border-left: 4px solid #b77a12;
+      padding-left: 12px;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 10pt;
+      color: #555;
+      margin-bottom: 14px;
+    }
+
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .kpi-card {
+      background: #fafafa;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .kpi-card.highlight {
+      background: #fffbf0;
+      border-color: #b77a12;
+    }
+    .kpi-card.good {
+      background: #f0fdf4;
+      border-color: #22c55e;
+    }
+    .kpi-card.warn {
+      background: #fff7ed;
+      border-color: #f97316;
+    }
+    .kpi-label {
+      font-size: 8pt;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .kpi-value {
+      font-size: 18pt;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+    .kpi-sub {
+      font-size: 8pt;
+      color: #888;
+      margin-top: 4px;
+    }
+    .kpi-card.good .kpi-value { color: #16a34a; }
+    .kpi-card.warn .kpi-value { color: #ea580c; }
+    .kpi-card.highlight .kpi-value { color: #b77a12; }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10pt;
+    }
+    thead tr {
+      background: #1a1a1a;
+      color: #fff;
+    }
+    thead th {
+      padding: 9px 12px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 9pt;
+      letter-spacing: 0.3px;
+    }
+    thead th.right { text-align: right; }
+    tbody tr:nth-child(even) { background: #f8f8f8; }
+    tbody tr:hover { background: #fef9ec; }
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #ebebeb;
+    }
+    tbody td.right { text-align: right; font-variant-numeric: tabular-nums; }
+    tbody tr.total-row td {
+      background: #f3f4f6;
+      font-weight: 700;
+      border-top: 2px solid #1a1a1a;
+    }
+    .status-active {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      font-size: 8pt;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .status-paused {
+      display: inline-block;
+      background: #f3f4f6;
+      color: #6b7280;
+      font-size: 8pt;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .cpa-good { color: #16a34a; font-weight: 700; }
+    .cpa-bad  { color: #ea580c; font-weight: 700; }
+
+    /* Daily chart — bar chart using inline divs */
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 120px;
+      padding: 0 4px;
+      margin-top: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    .bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+    .bar-value {
+      font-size: 7.5pt;
+      font-weight: 600;
+      color: #555;
+    }
+    .bar-fill {
+      width: 100%;
+      background: #b77a12;
+      border-radius: 3px 3px 0 0;
+      min-height: 2px;
+      transition: height 0.3s;
+    }
+    .bar-fill.peak { background: #d4940e; }
+    .bar-fill.low  { background: #e0c078; }
+    .bar-label {
+      font-size: 7pt;
+      color: #888;
+      text-align: center;
+      margin-top: 4px;
+      white-space: nowrap;
+    }
+    .bar-chart-wrap {
+      margin-bottom: 4px;
+    }
+    .chart-labels {
+      display: flex;
+      gap: 6px;
+      padding: 0 4px;
+    }
+    .chart-labels .bar-col {
+      font-size: 7pt;
+      color: #888;
+      text-align: center;
+    }
+
+    /* Event summary */
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .event-item {
+      background: #f8f8f8;
+      border-radius: 6px;
+      padding: 10px 12px;
+      border-left: 3px solid #ddd;
+    }
+    .event-item.primary { border-left-color: #b77a12; background: #fffbf0; }
+    .event-item.secondary { border-left-color: #3b82f6; }
+    .event-name { font-size: 8.5pt; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .event-count { font-size: 14pt; font-weight: 700; color: #1a1a1a; }
+    .event-users { font-size: 8pt; color: #888; margin-top: 2px; }
+
+    /* Insights */
+    .insight-list { list-style: none; }
+    .insight-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 10pt;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .insight-list li:last-child { border-bottom: none; }
+    .insight-icon {
+      font-size: 14pt;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .insight-text strong { color: #1a1a1a; }
+    .insight-text { color: #444; }
+
+    /* Recs */
+    .rec-list { list-style: none; counter-reset: rec; }
+    .rec-list li {
+      counter-increment: rec;
+      padding: 10px 0 10px 44px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 10pt;
+      position: relative;
+    }
+    .rec-list li:last-child { border-bottom: none; }
+    .rec-list li::before {
+      content: counter(rec);
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 26px;
+      height: 26px;
+      background: #b77a12;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9pt;
+      font-weight: 700;
+    }
+    .rec-title { font-weight: 600; color: #1a1a1a; }
+    .rec-desc { color: #555; font-size: 9.5pt; margin-top: 2px; }
+
+    /* Footer */
+    .footer {
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 8.5pt;
+      color: #aaa;
+    }
+
+    /* Alert box */
+    .alert {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-left: 4px solid #f97316;
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      font-size: 10pt;
+      color: #7c2d12;
+    }
+    .alert strong { color: #c2410c; }
+
+    .checkbox-cell { cursor: pointer; }
+
+    @media print {
+      body { padding: 0; }
+      .page { padding: 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-brand">
+      <h1>Gold Models Studio</h1>
+      <p>Informe de Rendimiento de Campañas Digitales</p>
+    </div>
+    <div class="header-meta">
+      <div class="badge">Agosto 2026</div>
+      <p>Período: 2026-08-18 a 2026-08-31</p>
+      <p>Cuenta: modelsstudiogold@gmail.com</p>
+    </div>
+  </div>
+
+  <div class="section"><div class="section-title">1. Resumen Ejecutivo</div>
+      <p style="color:#888;font-size:9.5pt;">⚠️ Sin datos de Google Ads (configura el Sheet — ver README). Solo se muestran métricas de GA4.</p></div>
+  
+  
+  <div class="section">
+    <div class="section-title">3. Clics en Botones de WhatsApp (GA4)</div>
+    <div class="section-subtitle">Evento: <code>click_whatsapp</code> | Propiedad: Gold Models Studio - Web | 2026-08-18 a 2026-08-31</div>
+    <div class="kpi-grid" style="grid-template-columns: repeat(3,1fr); margin-bottom: 24px;">
+      <div class="kpi-card highlight">
+        <div class="kpi-label">Total Clics WhatsApp</div>
+        <div class="kpi-value">151</div>
+        <div class="kpi-sub">Todas las fuentes</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Usuarios Únicos</div>
+        <div class="kpi-value">141</div>
+      </div>
+      <div class="kpi-card good">
+        <div class="kpi-label">Conv. del Popup</div>
+        <div class="kpi-value">28%</div>
+        <div class="kpi-sub">541 aperturas → 151 clics</div>
+      </div>
+    </div>
+    <p style="font-size:9pt; color:#555; margin-bottom:10px;">Distribución diaria de clics en WhatsApp:</p>
+    <div class="bar-chart-wrap">
+      <div class="bar-chart"><div class="bar-col"><div class="bar-value">3</div><div class="bar-fill low" style="height:16px"></div></div>
+<div class="bar-col"><div class="bar-value">21</div><div class="bar-fill peak" style="height:110px"></div></div>
+<div class="bar-col"><div class="bar-value">16</div><div class="bar-fill " style="height:84px"></div></div>
+<div class="bar-col"><div class="bar-value">12</div><div class="bar-fill " style="height:63px"></div></div>
+<div class="bar-col"><div class="bar-value">12</div><div class="bar-fill " style="height:63px"></div></div>
+<div class="bar-col"><div class="bar-value">15</div><div class="bar-fill " style="height:79px"></div></div>
+<div class="bar-col"><div class="bar-value">12</div><div class="bar-fill " style="height:63px"></div></div>
+<div class="bar-col"><div class="bar-value">14</div><div class="bar-fill " style="height:73px"></div></div>
+<div class="bar-col"><div class="bar-value">12</div><div class="bar-fill " style="height:63px"></div></div>
+<div class="bar-col"><div class="bar-value">11</div><div class="bar-fill " style="height:58px"></div></div>
+<div class="bar-col"><div class="bar-value">6</div><div class="bar-fill low" style="height:31px"></div></div>
+<div class="bar-col"><div class="bar-value">5</div><div class="bar-fill low" style="height:26px"></div></div>
+<div class="bar-col"><div class="bar-value">6</div><div class="bar-fill low" style="height:31px"></div></div>
+<div class="bar-col"><div class="bar-value">6</div><div class="bar-fill low" style="height:31px"></div></div></div>
+      <div class="chart-labels"><div class="bar-col">18/08</div>
+<div class="bar-col">19/08</div>
+<div class="bar-col">20/08</div>
+<div class="bar-col">21/08</div>
+<div class="bar-col">22/08</div>
+<div class="bar-col">23/08</div>
+<div class="bar-col">24/08</div>
+<div class="bar-col">25/08</div>
+<div class="bar-col">26/08</div>
+<div class="bar-col">27/08</div>
+<div class="bar-col">28/08</div>
+<div class="bar-col">29/08</div>
+<div class="bar-col">30/08</div>
+<div class="bar-col">31/08</div></div>
+    </div>
+  </div>
+  
+  <div class="section">
+    <div class="section-title">4. Embudo de Conversión</div>
+    <div class="event-grid">
+      <div class="event-item primary">
+        <div class="event-name">🔵 Visitas a la landing</div>
+        <div class="event-count">715</div>
+        <div class="event-users">usuarios únicos</div>
+      </div>
+      <div class="event-item secondary">
+        <div class="event-name">🔷 Popup activado</div>
+        <div class="event-count">441</div>
+        <div class="event-users">62% de visitas</div>
+      </div>
+      <div class="event-item">
+        <div class="event-name">💬 Clic en WhatsApp</div>
+        <div class="event-count">137</div>
+        <div class="event-users">19.2% de visitas</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="section">
+    <div class="section-title">7. Detalle de Clics WhatsApp por Fuente</div>
+    <div class="section-subtitle">Fuente: GA4 Data API · 2026-08-18 a 2026-08-31 · Total: 151 clics</div>
+    <table>
+      <thead><tr><th>Fuente / Campaña</th><th class="right">Clics</th><th class="right">%</th></tr></thead>
+      <tbody><tr><td>google / cpc — GMS | Search | Bogotá | Modelo Webcam | Popup #2</td><td class="right">90</td><td class="right">59.6%</td></tr>
+<tr><td>google / cpc — GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td><td class="right">38</td><td class="right">25.2%</td></tr>
+<tr><td>google / organic — (organic)</td><td class="right">12</td><td class="right">7.9%</td></tr>
+<tr><td>(data not available) — (cross-network)</td><td class="right">10</td><td class="right">6.6%</td></tr>
+<tr><td>chatgpt.com / ai-assistant — (ai-assistant)</td><td class="right">1</td><td class="right">0.7%</td></tr></tbody>
+    </table>
+  </div>
+  
+  <div class="section">
+    <div class="section-title">8. Análisis de Horarios Pico (Colombia GMT-5)</div>
+    <div class="section-subtitle">Usuarios únicos con clic en WhatsApp, por hora del día</div>
+    <div class="bar-chart-wrap">
+      <div class="bar-chart"><div class="bar-col"><div class="bar-value">11</div><div class="bar-fill " style="height:101px"></div></div>
+<div class="bar-col"><div class="bar-value">5</div><div class="bar-fill " style="height:46px"></div></div>
+<div class="bar-col"><div class="bar-value">2</div><div class="bar-fill low" style="height:18px"></div></div>
+<div class="bar-col"><div class="bar-value">0</div><div class="bar-fill low" style="height:2px"></div></div>
+<div class="bar-col"><div class="bar-value">0</div><div class="bar-fill low" style="height:2px"></div></div>
+<div class="bar-col"><div class="bar-value">2</div><div class="bar-fill low" style="height:18px"></div></div>
+<div class="bar-col"><div class="bar-value">3</div><div class="bar-fill low" style="height:28px"></div></div>
+<div class="bar-col"><div class="bar-value">7</div><div class="bar-fill " style="height:64px"></div></div>
+<div class="bar-col"><div class="bar-value">6</div><div class="bar-fill " style="height:55px"></div></div>
+<div class="bar-col"><div class="bar-value">11</div><div class="bar-fill " style="height:101px"></div></div>
+<div class="bar-col"><div class="bar-value">6</div><div class="bar-fill " style="height:55px"></div></div>
+<div class="bar-col"><div class="bar-value">6</div><div class="bar-fill " style="height:55px"></div></div>
+<div class="bar-col"><div class="bar-value">12</div><div class="bar-fill peak" style="height:110px"></div></div>
+<div class="bar-col"><div class="bar-value">5</div><div class="bar-fill " style="height:46px"></div></div>
+<div class="bar-col"><div class="bar-value">6</div><div class="bar-fill " style="height:55px"></div></div>
+<div class="bar-col"><div class="bar-value">11</div><div class="bar-fill " style="height:101px"></div></div>
+<div class="bar-col"><div class="bar-value">9</div><div class="bar-fill " style="height:83px"></div></div>
+<div class="bar-col"><div class="bar-value">7</div><div class="bar-fill " style="height:64px"></div></div>
+<div class="bar-col"><div class="bar-value">6</div><div class="bar-fill " style="height:55px"></div></div>
+<div class="bar-col"><div class="bar-value">7</div><div class="bar-fill " style="height:64px"></div></div>
+<div class="bar-col"><div class="bar-value">6</div><div class="bar-fill " style="height:55px"></div></div>
+<div class="bar-col"><div class="bar-value">8</div><div class="bar-fill " style="height:73px"></div></div>
+<div class="bar-col"><div class="bar-value">4</div><div class="bar-fill " style="height:37px"></div></div>
+<div class="bar-col"><div class="bar-value">2</div><div class="bar-fill low" style="height:18px"></div></div></div>
+      <div class="chart-labels"><div class="bar-col">0h</div>
+<div class="bar-col">1h</div>
+<div class="bar-col">2h</div>
+<div class="bar-col">3h</div>
+<div class="bar-col">4h</div>
+<div class="bar-col">5h</div>
+<div class="bar-col">6h</div>
+<div class="bar-col">7h</div>
+<div class="bar-col">8h</div>
+<div class="bar-col">9h</div>
+<div class="bar-col">10h</div>
+<div class="bar-col">11h</div>
+<div class="bar-col">12h</div>
+<div class="bar-col">13h</div>
+<div class="bar-col">14h</div>
+<div class="bar-col">15h</div>
+<div class="bar-col">16h</div>
+<div class="bar-col">17h</div>
+<div class="bar-col">18h</div>
+<div class="bar-col">19h</div>
+<div class="bar-col">20h</div>
+<div class="bar-col">21h</div>
+<div class="bar-col">22h</div>
+<div class="bar-col">23h</div></div>
+    </div>
+  </div>
+  
+  <div class="section" style="page-break-before:always">
+    <div class="section-title">9. Verificación de Gestión en WhatsApp</div>
+    <div class="section-subtitle">151 clics registrados por GA4 · 2026-08-18 a 2026-08-31 · Hora Colombia (GMT-5)</div>
+    <div class="alert">📋 <strong>Instrucciones:</strong> Para cada fila, buscá en WhatsApp Business la conversación de esa fecha y hora. Hacé clic en ☐ para marcar como ✓ Gestionado.</div>
+    <div style="overflow-x:auto;">
+      <table style="font-size:9pt;min-width:700px">
+        <thead><tr>
+          <th style="width:30px">#</th><th>Fecha</th><th>Hora</th><th>Ciudad</th><th>País</th>
+          <th>Disp.</th><th>Fuente</th><th>Campaña</th><th style="width:60px">Gestionado</th>
+        </tr></thead>
+        <tbody><tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">1</td>
+      <td style="padding:5px 8px;font-size:9.5pt">18/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">11:29</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / organic</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(organic)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">2</td>
+      <td style="padding:5px 8px;font-size:9.5pt">18/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">02:20</td>
+      <td style="padding:5px 8px;font-size:9pt">San Sebastian de los Reyes</td>
+      <td style="padding:5px 8px;font-size:9pt">Spain</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / organic</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(organic)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">3</td>
+      <td style="padding:5px 8px;font-size:9.5pt">18/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">08:38</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / organic</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(organic)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">4</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">00:12</td>
+      <td style="padding:5px 8px;font-size:9pt">—</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">5</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">00:23</td>
+      <td style="padding:5px 8px;font-size:9pt">Barranquilla</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">6</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">00:31</td>
+      <td style="padding:5px 8px;font-size:9pt">Bello</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">7</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">01:10</td>
+      <td style="padding:5px 8px;font-size:9pt">Medellin</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">(data not available)</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(cross-network)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">8</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">01:21</td>
+      <td style="padding:5px 8px;font-size:9pt">Tunja</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">9</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">11:53</td>
+      <td style="padding:5px 8px;font-size:9pt">Barquisimeto</td>
+      <td style="padding:5px 8px;font-size:9pt">Venezuela</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">10</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:37</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">11</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:06</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">desktop</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">12</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:06</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">desktop</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">13</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">14:37</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">tablet</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">14</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">15:25</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">desktop</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">15</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">16:47</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">16</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">17:19</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">17</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">17:53</td>
+      <td style="padding:5px 8px;font-size:9pt">Ngambur</td>
+      <td style="padding:5px 8px;font-size:9pt">Indonesia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">18</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">19:53</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">desktop</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / organic</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(organic)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">19</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">06:58</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">20</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">07:29</td>
+      <td style="padding:5px 8px;font-size:9pt">—</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">21</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">08:04</td>
+      <td style="padding:5px 8px;font-size:9pt">Soacha</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">22</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">08:59</td>
+      <td style="padding:5px 8px;font-size:9pt">—</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">23</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">09:20</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">24</td>
+      <td style="padding:5px 8px;font-size:9.5pt">19/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">09:39</td>
+      <td style="padding:5px 8px;font-size:9pt">—</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">25</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">00:01</td>
+      <td style="padding:5px 8px;font-size:9pt">Girardot</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">26</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">01:01</td>
+      <td style="padding:5px 8px;font-size:9pt">Barranquilla</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">27</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">10:02</td>
+      <td style="padding:5px 8px;font-size:9pt">Cali</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">28</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">10:33</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">desktop</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">29</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:56</td>
+      <td style="padding:5px 8px;font-size:9pt">Cucuta</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">(data not available)</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(cross-network)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">30</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">14:43</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">31</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">15:25</td>
+      <td style="padding:5px 8px;font-size:9pt">Barranquilla</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">32</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">16:01</td>
+      <td style="padding:5px 8px;font-size:9pt">Garzon</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">(data not available)</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(cross-network)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">33</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">16:25</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">34</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">17:17</td>
+      <td style="padding:5px 8px;font-size:9pt">Floridablanca</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">35</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">17:17</td>
+      <td style="padding:5px 8px;font-size:9pt">Floridablanca</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">36</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">17:28</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">37</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">02:47</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">(data not available)</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(cross-network)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">38</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">07:47</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">39</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">09:11</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">desktop</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">40</td>
+      <td style="padding:5px 8px;font-size:9.5pt">20/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">09:53</td>
+      <td style="padding:5px 8px;font-size:9pt">Cienaga</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">41</td>
+      <td style="padding:5px 8px;font-size:9.5pt">21/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">10:15</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">42</td>
+      <td style="padding:5px 8px;font-size:9.5pt">21/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:31</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">43</td>
+      <td style="padding:5px 8px;font-size:9.5pt">21/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">14:44</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">desktop</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">44</td>
+      <td style="padding:5px 8px;font-size:9.5pt">21/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">14:45</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">desktop</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">45</td>
+      <td style="padding:5px 8px;font-size:9.5pt">21/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">15:27</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">46</td>
+      <td style="padding:5px 8px;font-size:9.5pt">21/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">16:13</td>
+      <td style="padding:5px 8px;font-size:9pt">Concepcion</td>
+      <td style="padding:5px 8px;font-size:9pt">Chile</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">(data not available)</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(cross-network)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">47</td>
+      <td style="padding:5px 8px;font-size:9.5pt">21/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">19:24</td>
+      <td style="padding:5px 8px;font-size:9pt">Barranquilla</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">48</td>
+      <td style="padding:5px 8px;font-size:9.5pt">21/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">19:25</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">49</td>
+      <td style="padding:5px 8px;font-size:9.5pt">21/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">20:37</td>
+      <td style="padding:5px 8px;font-size:9pt">Soacha</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">50</td>
+      <td style="padding:5px 8px;font-size:9.5pt">21/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">20:43</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">51</td>
+      <td style="padding:5px 8px;font-size:9.5pt">21/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">07:51</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">52</td>
+      <td style="padding:5px 8px;font-size:9.5pt">21/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">08:32</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">53</td>
+      <td style="padding:5px 8px;font-size:9.5pt">22/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">01:31</td>
+      <td style="padding:5px 8px;font-size:9pt">Medellin</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">54</td>
+      <td style="padding:5px 8px;font-size:9.5pt">22/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">10:13</td>
+      <td style="padding:5px 8px;font-size:9pt">Cali</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">55</td>
+      <td style="padding:5px 8px;font-size:9.5pt">22/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">13:44</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">56</td>
+      <td style="padding:5px 8px;font-size:9.5pt">22/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">13:51</td>
+      <td style="padding:5px 8px;font-size:9pt">Cartagena</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">57</td>
+      <td style="padding:5px 8px;font-size:9.5pt">22/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">14:36</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">58</td>
+      <td style="padding:5px 8px;font-size:9.5pt">22/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">15:38</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">59</td>
+      <td style="padding:5px 8px;font-size:9.5pt">22/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">15:58</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">60</td>
+      <td style="padding:5px 8px;font-size:9.5pt">22/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">19:52</td>
+      <td style="padding:5px 8px;font-size:9pt">Soacha</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">61</td>
+      <td style="padding:5px 8px;font-size:9.5pt">22/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">19:53</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">62</td>
+      <td style="padding:5px 8px;font-size:9.5pt">22/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">05:03</td>
+      <td style="padding:5px 8px;font-size:9pt">Facatativa</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">63</td>
+      <td style="padding:5px 8px;font-size:9.5pt">22/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">05:34</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">64</td>
+      <td style="padding:5px 8px;font-size:9.5pt">22/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">09:07</td>
+      <td style="padding:5px 8px;font-size:9pt">Pereira</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">65</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">00:28</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">66</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">00:28</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">67</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">00:51</td>
+      <td style="padding:5px 8px;font-size:9pt">Cali</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">68</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">11:14</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">69</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">18:18</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">(data not available)</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(cross-network)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">70</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">18:20</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">(data not available)</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(cross-network)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">71</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">21:55</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / organic</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(organic)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">72</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">21:58</td>
+      <td style="padding:5px 8px;font-size:9pt">Monteria</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">73</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">22:21</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">74</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">22:42</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">75</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">22:43</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">76</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">22:44</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">77</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">23:35</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">chatgpt.com / ai-assistant</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(ai-assistant)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">78</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">23:57</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / organic</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(organic)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">79</td>
+      <td style="padding:5px 8px;font-size:9.5pt">23/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">09:15</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">80</td>
+      <td style="padding:5px 8px;font-size:9.5pt">24/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">00:28</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">81</td>
+      <td style="padding:5px 8px;font-size:9.5pt">24/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">11:07</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">desktop</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">82</td>
+      <td style="padding:5px 8px;font-size:9.5pt">24/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">13:27</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / organic</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(organic)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">83</td>
+      <td style="padding:5px 8px;font-size:9.5pt">24/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">14:54</td>
+      <td style="padding:5px 8px;font-size:9pt">Soacha</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">84</td>
+      <td style="padding:5px 8px;font-size:9.5pt">24/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">15:39</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / organic</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(organic)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">85</td>
+      <td style="padding:5px 8px;font-size:9.5pt">24/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">16:15</td>
+      <td style="padding:5px 8px;font-size:9pt">Chia</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">(data not available)</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(cross-network)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">86</td>
+      <td style="padding:5px 8px;font-size:9.5pt">24/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">18:27</td>
+      <td style="padding:5px 8px;font-size:9pt">Barranquilla</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">87</td>
+      <td style="padding:5px 8px;font-size:9.5pt">24/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">18:39</td>
+      <td style="padding:5px 8px;font-size:9pt">Cali</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">88</td>
+      <td style="padding:5px 8px;font-size:9.5pt">24/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">20:38</td>
+      <td style="padding:5px 8px;font-size:9pt">Envigado</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">89</td>
+      <td style="padding:5px 8px;font-size:9.5pt">24/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">20:04</td>
+      <td style="padding:5px 8px;font-size:9pt">Armenia</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">90</td>
+      <td style="padding:5px 8px;font-size:9.5pt">24/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">21:02</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / organic</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(organic)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">91</td>
+      <td style="padding:5px 8px;font-size:9.5pt">24/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">07:11</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">92</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">10:27</td>
+      <td style="padding:5px 8px;font-size:9pt">—</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">93</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">11:01</td>
+      <td style="padding:5px 8px;font-size:9pt">Valledupar</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">(data not available)</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(cross-network)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">94</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:14</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / organic</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(organic)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">95</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:50</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">96</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:06</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">97</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">15:23</td>
+      <td style="padding:5px 8px;font-size:9pt">Medellin</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">(data not available)</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(cross-network)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">98</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">18:49</td>
+      <td style="padding:5px 8px;font-size:9pt">Pereira</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">99</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">18:51</td>
+      <td style="padding:5px 8px;font-size:9pt">Cali</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">100</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">20:12</td>
+      <td style="padding:5px 8px;font-size:9pt">Cali</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">101</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">20:24</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">102</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">21:10</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">103</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">07:22</td>
+      <td style="padding:5px 8px;font-size:9pt">Ibague</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">104</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">09:06</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">105</td>
+      <td style="padding:5px 8px;font-size:9.5pt">25/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">09:09</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / organic</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(organic)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">106</td>
+      <td style="padding:5px 8px;font-size:9.5pt">26/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">00:19</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">107</td>
+      <td style="padding:5px 8px;font-size:9.5pt">26/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">01:36</td>
+      <td style="padding:5px 8px;font-size:9pt">Cali</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">108</td>
+      <td style="padding:5px 8px;font-size:9.5pt">26/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">10:45</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">109</td>
+      <td style="padding:5px 8px;font-size:9.5pt">26/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:17</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">110</td>
+      <td style="padding:5px 8px;font-size:9.5pt">26/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:38</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">111</td>
+      <td style="padding:5px 8px;font-size:9.5pt">26/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">13:34</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">112</td>
+      <td style="padding:5px 8px;font-size:9.5pt">26/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">15:53</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">113</td>
+      <td style="padding:5px 8px;font-size:9.5pt">26/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">15:53</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">114</td>
+      <td style="padding:5px 8px;font-size:9.5pt">26/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">16:09</td>
+      <td style="padding:5px 8px;font-size:9pt">Soacha</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">115</td>
+      <td style="padding:5px 8px;font-size:9.5pt">26/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">19:22</td>
+      <td style="padding:5px 8px;font-size:9pt">Apartado</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">116</td>
+      <td style="padding:5px 8px;font-size:9.5pt">26/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">06:15</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">117</td>
+      <td style="padding:5px 8px;font-size:9.5pt">26/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">08:06</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">desktop</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / organic</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">(organic)</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">118</td>
+      <td style="padding:5px 8px;font-size:9.5pt">27/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">00:38</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">tablet</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">119</td>
+      <td style="padding:5px 8px;font-size:9.5pt">27/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">00:45</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">120</td>
+      <td style="padding:5px 8px;font-size:9.5pt">27/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">11:44</td>
+      <td style="padding:5px 8px;font-size:9pt">Cali</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">121</td>
+      <td style="padding:5px 8px;font-size:9.5pt">27/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:53</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">122</td>
+      <td style="padding:5px 8px;font-size:9.5pt">27/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">15:32</td>
+      <td style="padding:5px 8px;font-size:9pt">Soacha</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">123</td>
+      <td style="padding:5px 8px;font-size:9.5pt">27/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">21:26</td>
+      <td style="padding:5px 8px;font-size:9pt">—</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">124</td>
+      <td style="padding:5px 8px;font-size:9.5pt">27/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">21:39</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">125</td>
+      <td style="padding:5px 8px;font-size:9.5pt">27/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">07:36</td>
+      <td style="padding:5px 8px;font-size:9pt">Soacha</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">126</td>
+      <td style="padding:5px 8px;font-size:9.5pt">27/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">07:47</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">127</td>
+      <td style="padding:5px 8px;font-size:9.5pt">27/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">08:20</td>
+      <td style="padding:5px 8px;font-size:9pt">Ngambur</td>
+      <td style="padding:5px 8px;font-size:9pt">Indonesia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">128</td>
+      <td style="padding:5px 8px;font-size:9.5pt">27/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">09:22</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">129</td>
+      <td style="padding:5px 8px;font-size:9.5pt">28/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">00:57</td>
+      <td style="padding:5px 8px;font-size:9pt">Soacha</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">130</td>
+      <td style="padding:5px 8px;font-size:9.5pt">28/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:44</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">131</td>
+      <td style="padding:5px 8px;font-size:9.5pt">28/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">15:43</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">132</td>
+      <td style="padding:5px 8px;font-size:9.5pt">28/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">16:12</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">133</td>
+      <td style="padding:5px 8px;font-size:9.5pt">28/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">18:16</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">134</td>
+      <td style="padding:5px 8px;font-size:9.5pt">28/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">22:48</td>
+      <td style="padding:5px 8px;font-size:9pt">—</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">135</td>
+      <td style="padding:5px 8px;font-size:9.5pt">29/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">14:35</td>
+      <td style="padding:5px 8px;font-size:9pt">Merida</td>
+      <td style="padding:5px 8px;font-size:9pt">Venezuela</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">136</td>
+      <td style="padding:5px 8px;font-size:9.5pt">29/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">17:00</td>
+      <td style="padding:5px 8px;font-size:9pt">Cartagena</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">137</td>
+      <td style="padding:5px 8px;font-size:9.5pt">29/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">18:18</td>
+      <td style="padding:5px 8px;font-size:9pt">Cali</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">138</td>
+      <td style="padding:5px 8px;font-size:9.5pt">29/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">21:22</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">desktop</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Reclutamiento | WhatsApp #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">139</td>
+      <td style="padding:5px 8px;font-size:9.5pt">29/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">09:01</td>
+      <td style="padding:5px 8px;font-size:9pt">Palmira</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">140</td>
+      <td style="padding:5px 8px;font-size:9.5pt">30/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">16:24</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">141</td>
+      <td style="padding:5px 8px;font-size:9.5pt">30/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">16:25</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">142</td>
+      <td style="padding:5px 8px;font-size:9.5pt">30/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">21:45</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">143</td>
+      <td style="padding:5px 8px;font-size:9.5pt">30/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">22:55</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">144</td>
+      <td style="padding:5px 8px;font-size:9.5pt">30/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">06:04</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">145</td>
+      <td style="padding:5px 8px;font-size:9.5pt">30/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">09:34</td>
+      <td style="padding:5px 8px;font-size:9pt">Medellin</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">146</td>
+      <td style="padding:5px 8px;font-size:9.5pt">31/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">12:18</td>
+      <td style="padding:5px 8px;font-size:9pt">Cartago</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">147</td>
+      <td style="padding:5px 8px;font-size:9.5pt">31/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">13:08</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">148</td>
+      <td style="padding:5px 8px;font-size:9.5pt">31/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">16:36</td>
+      <td style="padding:5px 8px;font-size:9pt">David</td>
+      <td style="padding:5px 8px;font-size:9pt">Panama</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">149</td>
+      <td style="padding:5px 8px;font-size:9.5pt">31/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">17:27</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">150</td>
+      <td style="padding:5px 8px;font-size:9.5pt">31/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">17:58</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr>
+<tr>
+      <td style="text-align:center;color:#aaa;font-size:8pt;padding:5px 4px">151</td>
+      <td style="padding:5px 8px;font-size:9.5pt">31/08/2026</td>
+      <td style="text-align:center;padding:5px 8px;font-weight:700;font-size:11.5pt">19:07</td>
+      <td style="padding:5px 8px;font-size:9pt">Bogota</td>
+      <td style="padding:5px 8px;font-size:9pt">Colombia</td>
+      <td style="padding:5px 8px;font-size:8.5pt;color:#555">mobile</td>
+      <td style="padding:5px 8px;font-size:8.5pt">google / cpc</td>
+      <td style="padding:5px 8px;font-size:8pt;color:#555">GMS | Search | Bogotá | Modelo Webcam | Popup #2</td>
+      <td class="checkbox-cell" style="text-align:center;padding:5px 8px" onclick="toggleCheck(this)"><span style="font-size:15pt">☐</span></td>
+    </tr></tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    function toggleCheck(td) {
+      const span = td.querySelector('span');
+      if (span.textContent === '☐') { span.textContent = '✓'; span.style.color = '#16a34a'; td.closest('tr').style.background = '#f0fdf4'; }
+      else if (span.textContent === '✓') { span.textContent = '✗'; span.style.color = '#dc2626'; td.closest('tr').style.background = '#fff7f7'; }
+      else { span.textContent = '☐'; span.style.color = ''; td.closest('tr').style.background = ''; }
+    }
+  </script>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>Gold Models Studio — Bogotá, Colombia</span>
+    <span>Actualizado el 1 de septiembre de 2026 | Datos: Google Ads + GA4 Data API</span>
+  </div>
+
+</div>
+</body>
+</html>
